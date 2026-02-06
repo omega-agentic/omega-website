@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omega — Brand Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ─── Reset & Foundation ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #FAFAF9;
+  --fg: #18181B;
+  --accent: #78716C;
+  --accent-dim: rgba(120, 113, 108, 0.15);
+  --accent-soft: rgba(120, 113, 108, 0.08);
+  --omega-scale: 1.35;
+  --omega-gap: 0.28;
+  --transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  --font: 'Outfit', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+.dark {
+  --bg: #18181B;
+  --fg: #FAFAF9;
+  --accent: #A8A29E;
+  --accent-dim: rgba(168, 162, 158, 0.18);
+  --accent-soft: rgba(168, 162, 158, 0.08);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--fg);
+  transition: background var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Slide Container ─── */
+.deck {
+  width: 100%; height: 100%;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8vh 10vw;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ─── Navigation ─── */
+.nav {
+  position: fixed;
+  bottom: 3.2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.nav button {
+  background: none;
+  border: 1px solid var(--accent-dim);
+  color: var(--accent);
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  font-family: var(--font);
+}
+
+.nav button:hover {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+
+.progress-track {
+  width: 120px;
+  height: 1px;
+  background: var(--accent-dim);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 3vh;
+  right: 4vw;
+  z-index: 100;
+  background: none;
+  border: 1px solid var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+
+/* ─── Typography Classes ─── */
+.display {
+  font-weight: 300;
+  font-size: clamp(36px, 5.5vw, 72px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.headline {
+  font-weight: 500;
+  font-size: clamp(20px, 2.5vw, 32px);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.body {
+  font-weight: 400;
+  font-size: clamp(14px, 1.3vw, 18px);
+  line-height: 1.65;
+  color: var(--accent);
+  max-width: 560px;
+}
+
+.caption {
+  font-family: var(--mono);
+  font-size: clamp(10px, 0.9vw, 12px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.code {
+  font-family: var(--mono);
+  font-size: clamp(12px, 1.1vw, 15px);
+  line-height: 1.7;
+}
+
+/* ─── Lockup Component ─── */
+.lockup {
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.lockup .omega-symbol {
+  font-family: var(--font);
+  font-weight: 400;
+}
+
+.lockup .omega-word {
+  font-family: var(--font);
+  font-weight: 400;
+}
+
+/* ─── Utility ─── */
+.gap-xs { height: 1.2vh; }
+.gap-sm { height: 2.5vh; }
+.gap-md { height: 4vh; }
+.gap-lg { height: 6vh; }
+
+.center { text-align: center; }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  width: 40px;
+  height: 1px;
+  background: var(--accent-dim);
+  margin: 2.5vh 0;
+}
+
+/* ─── Swatch ─── */
+.swatch-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.swatch-chip {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  border: 1px solid var(--accent-dim);
+  transition: all var(--transition);
+}
+
+.swatch-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.swatch-hex {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+/* ─── App Icon ─── */
+.icon-row {
+  display: flex;
+  align-items: end;
+  gap: clamp(16px, 3vw, 40px);
+}
+
+.app-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22%;
+  position: relative;
+  transition: all var(--transition);
+}
+
+.app-icon .omega-glyph {
+  font-family: var(--font);
+  font-weight: 400;
+  transform: translateY(-2%);
+}
+
+.icon-size-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  text-align: center;
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Clear Space Diagram ─── */
+.clearspace-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--accent);
+  opacity: 0.5;
+  padding: 48px 64px;
+}
+
+.clearspace-box::before {
+  content: '1×';
+  position: absolute;
+  top: 50%;
+  left: -28px;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+}
+
+.clearspace-box::after {
+  content: '0.66×';
+  position: absolute;
+  left: 50%;
+  top: -20px;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+}
+
+/* ─── Don'ts Grid ─── */
+.donts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 160px);
+  gap: 16px;
+  justify-content: center;
+}
+
+.dont-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 160px;
+  height: 160px;
+  padding: 16px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 10px;
+}
+
+.dont-item .example {
+  font-family: var(--font);
+  font-size: 20px;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.dont-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.dont-x {
+  color: #B91C1C;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.dark .dont-x {
+  color: #EF4444;
+}
+
+/* ─── CLI Block ─── */
+.cli-block {
+  background: #18181B;
+  color: #FAFAF9;
+  border-radius: 12px;
+  padding: clamp(24px, 3vw, 36px);
+  font-family: var(--mono);
+  font-size: clamp(11px, 1.1vw, 14px);
+  line-height: 1.85;
+  width: 380px;
+  border: 1px solid rgba(168, 162, 158, 0.12);
+}
+
+.dark .cli-block {
+  background: #0f0f11;
+  border-color: rgba(168, 162, 158, 0.08);
+}
+
+.cli-prompt { color: #A8A29E; }
+.cli-green { color: #4ADE80; }
+.cli-dim { color: #78716C; }
+
+/* ─── Product Card ─── */
+.product-card {
+  border: 1px solid var(--accent-dim);
+  border-radius: 12px;
+  padding: clamp(24px, 3vw, 36px);
+  width: 380px;
+  text-align: left;
+}
+
+.product-card .card-title {
+  font-weight: 500;
+  font-size: clamp(16px, 1.5vw, 20px);
+  margin-bottom: 8px;
+}
+
+.product-card .card-body {
+  font-size: clamp(12px, 1.1vw, 14px);
+  color: var(--accent);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.product-card .card-cta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--fg);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Context Row ─── */
+.context-row {
+  display: flex;
+  gap: clamp(20px, 3vw, 36px);
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* ─── Proof Notation Canvas ─── */
+.pattern-canvas {
+  width: clamp(360px, 62vw, 720px);
+  height: clamp(260px, 42vh, 440px);
+  border-radius: 14px;
+  border: 1px solid var(--accent-dim);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Scale Showcase ─── */
+.scale-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scale-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scale-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+/* ─── Construction Diagram ─── */
+.construction {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  padding: 60px 40px 40px;
+}
+
+.construction-line {
+  position: absolute;
+  background: var(--accent);
+  opacity: 0.3;
+}
+
+.construction-label {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+/* ─── Type Specimen ─── */
+.type-specimen {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8vh;
+  align-items: flex-start;
+  max-width: 640px;
+  width: 100%;
+}
+
+.type-row {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  width: 100%;
+}
+
+.type-meta {
+  min-width: 120px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.type-sample {
+  flex: 1;
+}
+
+/* ─── Summary Grid ─── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.summary-item {
+  padding: 20px 24px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 10px;
+}
+
+.summary-item .s-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.summary-item .s-value {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ─── Orbital Animation ─── */
+.orbital-container {
+  position: relative;
+  width: clamp(320px, 56vw, 560px);
+  height: clamp(320px, 56vw, 560px);
+}
+
+.orbital-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font);
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--fg);
+  z-index: 2;
+}
+
+@keyframes orbit {
+  from { transform: rotate(var(--start)) translateX(var(--rx)) rotate(calc(-1 * var(--start))); }
+  to   { transform: rotate(calc(var(--start) + 360deg)) translateX(var(--rx)) rotate(calc(-1 * (var(--start) + 360deg))); }
+}
+
+.orbit-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border: 1px solid var(--accent-dim);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbit-particle {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: orbit linear infinite;
+}
+
+/* ─── Omega Grid Pattern ─── */
+.omega-grid-pattern {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  width: clamp(380px, 64vw, 700px);
+  height: clamp(280px, 48vh, 480px);
+  place-items: center;
+}
+
+.omega-grid-pattern .grid-cell {
+  font-family: var(--font);
+  font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .slide { padding: 6vh 6vw; }
+  .donts-grid { grid-template-columns: repeat(2, 140px); }
+  .dont-item { width: 140px; height: 140px; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .context-row { flex-direction: column; align-items: center; }
+  .type-row { flex-direction: column; gap: 4px; }
+  .type-meta { text-align: left; min-width: auto; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">Light</button>
+
+<div class="deck" id="deck">
+
+<!-- ═══ SLIDE 0: Title ═══ -->
+<div class="slide active" data-slide="0">
+  <div class="caption">Brand Guide · 2026</div>
+  <div class="gap-sm"></div>
+  <div class="lockup" style="font-size: clamp(48px, 7vw, 88px);">
+    <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+    <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+    <span class="omega-word">Omega</span>
+  </div>
+  <div class="gap-sm"></div>
+  <div class="body center" style="font-family: var(--mono); font-size: clamp(12px, 1.2vw, 16px); letter-spacing: 0.03em;">the result is saved</div>
+</div>
+
+<!-- ═══ SLIDE 1: Philosophy ═══ -->
+<div class="slide" data-slide="1">
+  <div class="caption">01 — Philosophy</div>
+  <div class="gap-sm"></div>
+  <div class="display center">Every decision<br>should feel inevitable.</div>
+  <div class="gap-md"></div>
+  <div class="body center">
+    The brand aesthetic is "expensive paper" — permanent, precise, archival.<br>
+    Not a SaaS dashboard. Something worth preserving.
+  </div>
+  <div class="gap-sm"></div>
+  <div class="row" style="gap: 40px;">
+    <div class="col" style="align-items: center;">
+      <div style="font-weight: 500; font-size: 15px; margin-bottom: 4px;">Resolved</div>
+      <div style="font-size: 12px; color: var(--accent);">Complete, not dangling</div>
+    </div>
+    <div class="col" style="align-items: center;">
+      <div style="font-weight: 500; font-size: 15px; margin-bottom: 4px;">Permanent</div>
+      <div style="font-size: 12px; color: var(--accent);">Built to last</div>
+    </div>
+    <div class="col" style="align-items: center;">
+      <div style="font-weight: 500; font-size: 15px; margin-bottom: 4px;">Precise</div>
+      <div style="font-size: 12px; color: var(--accent);">Intentional, not arbitrary</div>
+    </div>
+    <div class="col" style="align-items: center;">
+      <div style="font-weight: 500; font-size: 15px; margin-bottom: 4px;">Trustworthy</div>
+      <div style="font-size: 12px; color: var(--accent);">Provable, not promised</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2: The Symbol ═══ -->
+<div class="slide" data-slide="2">
+  <div class="caption">02 — The Symbol</div>
+  <div class="gap-sm"></div>
+  <div style="font-family: var(--font); font-weight: 300; font-size: clamp(96px, 18vw, 220px); line-height: 1;">ω</div>
+  <div class="gap-md"></div>
+  <div class="body center">
+    The lowercase Greek omega. The end state.<br>
+    Where obligations resolve.
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3: The Wordmark ═══ -->
+<div class="slide" data-slide="3">
+  <div class="caption">03 — The Wordmark</div>
+  <div class="gap-sm"></div>
+  <div style="font-family: var(--font); font-weight: 400; font-size: clamp(56px, 9vw, 120px); letter-spacing: -0.02em;">Omega</div>
+  <div class="gap-md"></div>
+  <div class="body center">
+    Outfit. Geometric sans-serif with warmth.<br>
+    Regular weight. Precise letterforms carry the brand.
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4: The Lockup ═══ -->
+<div class="slide" data-slide="4">
+  <div class="caption">04 — The Lockup</div>
+  <div class="gap-sm"></div>
+  <div class="lockup" id="lockup-demo" style="font-size: clamp(48px, 7vw, 80px);">
+    <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+    <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+    <span class="omega-word">Omega</span>
+  </div>
+  <div class="gap-md"></div>
+  <div class="body center">
+    Symbol and wordmark, baseline aligned.<br>
+    One mark. One voice. Resolved.
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5: Construction ═══ -->
+<div class="slide" data-slide="5">
+  <div class="caption">05 — Construction</div>
+  <div class="gap-sm"></div>
+  <div class="lockup" style="font-size: clamp(44px, 5.5vw, 68px);">
+    <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+    <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+    <span class="omega-word">Omega</span>
+  </div>
+  <div class="gap-md"></div>
+  <div style="display: flex; gap: clamp(32px, 5vw, 72px); justify-content: center;">
+    <div style="text-align: center;">
+      <div style="font-weight: 500; font-size: clamp(24px, 2.5vw, 36px); letter-spacing: -0.02em;">×1.35</div>
+      <div style="height: 6px;"></div>
+      <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);">Symbol scale</div>
+    </div>
+    <div style="width: 1px; background: var(--accent-dim); align-self: stretch;"></div>
+    <div style="text-align: center;">
+      <div style="font-weight: 500; font-size: clamp(24px, 2.5vw, 36px); letter-spacing: -0.02em;">×0.28</div>
+      <div style="height: 6px;"></div>
+      <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);">Gap ratio</div>
+    </div>
+    <div style="width: 1px; background: var(--accent-dim); align-self: stretch;"></div>
+    <div style="text-align: center;">
+      <div style="font-weight: 500; font-size: clamp(24px, 2.5vw, 36px); letter-spacing: -0.02em;">Baseline</div>
+      <div style="height: 6px;"></div>
+      <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);">Alignment</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6: Scale ═══ -->
+<div class="slide" data-slide="6">
+  <div class="caption">06 — Scale</div>
+  <div class="gap-sm"></div>
+  <div class="scale-stack">
+    <!-- Hero size — commands the slide -->
+    <div class="scale-item">
+      <div class="lockup" style="font-size: clamp(48px, 5.5vw, 72px);">
+        <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+        <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+        <span class="omega-word">Omega</span>
+      </div>
+      <span class="scale-label">72px</span>
+    </div>
+    <div style="height: 5vh;"></div>
+    <!-- Cascade — diminishing space between each -->
+    <div class="scale-item">
+      <div class="lockup" style="font-size: 36px;">
+        <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+        <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+        <span class="omega-word">Omega</span>
+      </div>
+      <span class="scale-label">36px</span>
+    </div>
+    <div style="height: 3vh;"></div>
+    <div class="scale-item">
+      <div class="lockup" style="font-size: 22px;">
+        <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+        <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+        <span class="omega-word">Omega</span>
+      </div>
+      <span class="scale-label">22px</span>
+    </div>
+    <div style="height: 2vh;"></div>
+    <!-- Minimum threshold -->
+    <div style="display: flex; align-items: baseline; gap: 28px; justify-content: center;">
+      <div class="scale-item">
+        <div class="lockup" style="font-size: 16px;">
+          <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+          <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+          <span class="omega-word">Omega</span>
+        </div>
+        <span class="scale-label">16px</span>
+      </div>
+      <div class="scale-item">
+        <div class="lockup" style="font-size: 14px;">
+          <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+          <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+          <span class="omega-word">Omega</span>
+        </div>
+        <span class="scale-label">14px min</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7: Colors — Light Mode ═══ -->
+<div class="slide" data-slide="7">
+  <div class="caption">07 — Color · Light Mode</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Warm Neutral</div>
+  <div class="gap-xs"></div>
+  <div class="body center">Stone tones with warmth. Never cold. Never sterile.</div>
+  <div class="gap-md"></div>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #FAFAF9; border-color: #E7E5E4;"></div>
+      <div class="swatch-label">Background</div>
+      <div class="swatch-hex">#FAFAF9</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #18181B;"></div>
+      <div class="swatch-label">Foreground</div>
+      <div class="swatch-hex">#18181B</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #78716C;"></div>
+      <div class="swatch-label">Accent</div>
+      <div class="swatch-hex">#78716C</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8: Colors — Dark Mode ═══ -->
+<div class="slide" data-slide="8">
+  <div class="caption">08 — Color · Dark Mode</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Perfectly Inverted</div>
+  <div class="gap-xs"></div>
+  <div class="body center">Same structure. Inverted values. Accent lifts for legibility.</div>
+  <div class="gap-md"></div>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #18181B;"></div>
+      <div class="swatch-label">Background</div>
+      <div class="swatch-hex">#18181B</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #FAFAF9; border-color: #E7E5E4;"></div>
+      <div class="swatch-label">Foreground</div>
+      <div class="swatch-hex">#FAFAF9</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #A8A29E;"></div>
+      <div class="swatch-label">Accent</div>
+      <div class="swatch-hex">#A8A29E</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9: App Icons ═══ -->
+<div class="slide" data-slide="9">
+  <div class="caption">09 — App Icons</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Symbol at rest</div>
+  <div class="gap-xs"></div>
+  <div class="body center">50% of container. 22% corner radius. 2% optical lift.</div>
+  <div class="gap-md"></div>
+  <div style="display: flex; gap: clamp(24px, 4vw, 56px); align-items: center; justify-content: center; flex-wrap: wrap;">
+    <!-- Large hero icons -->
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;">
+      <div class="app-icon" style="width: 144px; height: 144px; background: #18181B; color: #FAFAF9;">
+        <svg width="72" height="58" viewBox="0 0 143 116" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M40.492 115.752C31.7293 115.752 24.3093 113.349 18.232 108.544C12.296 103.739 7.77333 97.0253 4.664 88.404C1.55467 79.7827 0 69.8187 0 58.512C0 45.0853 1.83733 33.496 5.512 23.744C9.18667 13.992 13.6387 6.07733 18.868 0H37.948C34.4147 4.09866 31.164 8.97466 28.196 14.628C25.3693 20.14 23.0373 26.5707 21.2 33.92C19.504 41.2693 18.656 49.5373 18.656 58.724C18.656 72.4333 20.776 82.8213 25.016 89.888C29.256 96.8133 34.8387 100.276 41.764 100.276C46.428 100.276 50.244 99.0747 53.212 96.672C56.3213 94.2693 58.5827 91.0187 59.996 86.92C61.4093 82.68 62.116 77.9453 62.116 72.716V38.584H79.924V72.716C79.924 78.5107 80.7013 83.528 82.256 87.768C83.952 91.8667 86.284 94.976 89.252 97.096C92.22 99.216 95.824 100.276 100.064 100.276C104.869 100.276 108.968 98.7213 112.36 95.612C115.893 92.5027 118.579 87.8387 120.416 81.62C122.395 75.4013 123.384 67.7693 123.384 58.724C123.384 49.82 122.607 41.8347 121.052 34.768C119.497 27.56 117.236 21.1293 114.268 15.476C111.441 9.68133 108.049 4.52267 104.092 0H123.172C126.988 4.38134 130.309 9.46934 133.136 15.264C135.963 20.9173 138.153 27.348 139.708 34.556C141.263 41.764 142.04 49.7493 142.04 58.512C142.04 69.8187 140.485 79.7827 137.376 88.404C134.267 97.0253 129.673 103.739 123.596 108.544C117.66 113.349 110.311 115.752 101.548 115.752C93.7747 115.752 87.4147 113.985 82.468 110.452C77.5213 106.777 73.8467 100.771 71.444 92.432H70.384C68.9707 97.944 66.9213 102.467 64.236 106C61.5507 109.392 58.2293 111.865 54.272 113.42C50.3147 114.975 45.7213 115.752 40.492 115.752Z"/></svg>
+      </div>
+      <div class="icon-size-label">144px · Dark</div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;">
+      <div class="app-icon" style="width: 144px; height: 144px; background: #FAFAF9; border: 1px solid #E7E5E4; color: #18181B;">
+        <svg width="72" height="58" viewBox="0 0 143 116" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M40.492 115.752C31.7293 115.752 24.3093 113.349 18.232 108.544C12.296 103.739 7.77333 97.0253 4.664 88.404C1.55467 79.7827 0 69.8187 0 58.512C0 45.0853 1.83733 33.496 5.512 23.744C9.18667 13.992 13.6387 6.07733 18.868 0H37.948C34.4147 4.09866 31.164 8.97466 28.196 14.628C25.3693 20.14 23.0373 26.5707 21.2 33.92C19.504 41.2693 18.656 49.5373 18.656 58.724C18.656 72.4333 20.776 82.8213 25.016 89.888C29.256 96.8133 34.8387 100.276 41.764 100.276C46.428 100.276 50.244 99.0747 53.212 96.672C56.3213 94.2693 58.5827 91.0187 59.996 86.92C61.4093 82.68 62.116 77.9453 62.116 72.716V38.584H79.924V72.716C79.924 78.5107 80.7013 83.528 82.256 87.768C83.952 91.8667 86.284 94.976 89.252 97.096C92.22 99.216 95.824 100.276 100.064 100.276C104.869 100.276 108.968 98.7213 112.36 95.612C115.893 92.5027 118.579 87.8387 120.416 81.62C122.395 75.4013 123.384 67.7693 123.384 58.724C123.384 49.82 122.607 41.8347 121.052 34.768C119.497 27.56 117.236 21.1293 114.268 15.476C111.441 9.68133 108.049 4.52267 104.092 0H123.172C126.988 4.38134 130.309 9.46934 133.136 15.264C135.963 20.9173 138.153 27.348 139.708 34.556C141.263 41.764 142.04 49.7493 142.04 58.512C142.04 69.8187 140.485 79.7827 137.376 88.404C134.267 97.0253 129.673 103.739 123.596 108.544C117.66 113.349 110.311 115.752 101.548 115.752C93.7747 115.752 87.4147 113.985 82.468 110.452C77.5213 106.777 73.8467 100.771 71.444 92.432H70.384C68.9707 97.944 66.9213 102.467 64.236 106C61.5507 109.392 58.2293 111.865 54.272 113.42C50.3147 114.975 45.7213 115.752 40.492 115.752Z"/></svg>
+      </div>
+      <div class="icon-size-label">144px · Light</div>
+    </div>
+    <!-- Smaller sizes -->
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <div style="display: flex; gap: 16px; align-items: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div class="app-icon" style="width: 80px; height: 80px; background: #18181B; color: #FAFAF9;">
+            <svg width="40" height="32" viewBox="0 0 143 116" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M40.492 115.752C31.7293 115.752 24.3093 113.349 18.232 108.544C12.296 103.739 7.77333 97.0253 4.664 88.404C1.55467 79.7827 0 69.8187 0 58.512C0 45.0853 1.83733 33.496 5.512 23.744C9.18667 13.992 13.6387 6.07733 18.868 0H37.948C34.4147 4.09866 31.164 8.97466 28.196 14.628C25.3693 20.14 23.0373 26.5707 21.2 33.92C19.504 41.2693 18.656 49.5373 18.656 58.724C18.656 72.4333 20.776 82.8213 25.016 89.888C29.256 96.8133 34.8387 100.276 41.764 100.276C46.428 100.276 50.244 99.0747 53.212 96.672C56.3213 94.2693 58.5827 91.0187 59.996 86.92C61.4093 82.68 62.116 77.9453 62.116 72.716V38.584H79.924V72.716C79.924 78.5107 80.7013 83.528 82.256 87.768C83.952 91.8667 86.284 94.976 89.252 97.096C92.22 99.216 95.824 100.276 100.064 100.276C104.869 100.276 108.968 98.7213 112.36 95.612C115.893 92.5027 118.579 87.8387 120.416 81.62C122.395 75.4013 123.384 67.7693 123.384 58.724C123.384 49.82 122.607 41.8347 121.052 34.768C119.497 27.56 117.236 21.1293 114.268 15.476C111.441 9.68133 108.049 4.52267 104.092 0H123.172C126.988 4.38134 130.309 9.46934 133.136 15.264C135.963 20.9173 138.153 27.348 139.708 34.556C141.263 41.764 142.04 49.7493 142.04 58.512C142.04 69.8187 140.485 79.7827 137.376 88.404C134.267 97.0253 129.673 103.739 123.596 108.544C117.66 113.349 110.311 115.752 101.548 115.752C93.7747 115.752 87.4147 113.985 82.468 110.452C77.5213 106.777 73.8467 100.771 71.444 92.432H70.384C68.9707 97.944 66.9213 102.467 64.236 106C61.5507 109.392 58.2293 111.865 54.272 113.42C50.3147 114.975 45.7213 115.752 40.492 115.752Z"/></svg>
+          </div>
+          <div class="icon-size-label">80px</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div class="app-icon" style="width: 56px; height: 56px; background: #FAFAF9; border: 1px solid #E7E5E4; color: #18181B;">
+            <svg width="28" height="23" viewBox="0 0 143 116" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M40.492 115.752C31.7293 115.752 24.3093 113.349 18.232 108.544C12.296 103.739 7.77333 97.0253 4.664 88.404C1.55467 79.7827 0 69.8187 0 58.512C0 45.0853 1.83733 33.496 5.512 23.744C9.18667 13.992 13.6387 6.07733 18.868 0H37.948C34.4147 4.09866 31.164 8.97466 28.196 14.628C25.3693 20.14 23.0373 26.5707 21.2 33.92C19.504 41.2693 18.656 49.5373 18.656 58.724C18.656 72.4333 20.776 82.8213 25.016 89.888C29.256 96.8133 34.8387 100.276 41.764 100.276C46.428 100.276 50.244 99.0747 53.212 96.672C56.3213 94.2693 58.5827 91.0187 59.996 86.92C61.4093 82.68 62.116 77.9453 62.116 72.716V38.584H79.924V72.716C79.924 78.5107 80.7013 83.528 82.256 87.768C83.952 91.8667 86.284 94.976 89.252 97.096C92.22 99.216 95.824 100.276 100.064 100.276C104.869 100.276 108.968 98.7213 112.36 95.612C115.893 92.5027 118.579 87.8387 120.416 81.62C122.395 75.4013 123.384 67.7693 123.384 58.724C123.384 49.82 122.607 41.8347 121.052 34.768C119.497 27.56 117.236 21.1293 114.268 15.476C111.441 9.68133 108.049 4.52267 104.092 0H123.172C126.988 4.38134 130.309 9.46934 133.136 15.264C135.963 20.9173 138.153 27.348 139.708 34.556C141.263 41.764 142.04 49.7493 142.04 58.512C142.04 69.8187 140.485 79.7827 137.376 88.404C134.267 97.0253 129.673 103.739 123.596 108.544C117.66 113.349 110.311 115.752 101.548 115.752C93.7747 115.752 87.4147 113.985 82.468 110.452C77.5213 106.777 73.8467 100.771 71.444 92.432H70.384C68.9707 97.944 66.9213 102.467 64.236 106C61.5507 109.392 58.2293 111.865 54.272 113.42C50.3147 114.975 45.7213 115.752 40.492 115.752Z"/></svg>
+          </div>
+          <div class="icon-size-label">56px</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div class="app-icon" style="width: 36px; height: 36px; background: #18181B; color: #FAFAF9;">
+            <svg width="18" height="15" viewBox="0 0 143 116" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M40.492 115.752C31.7293 115.752 24.3093 113.349 18.232 108.544C12.296 103.739 7.77333 97.0253 4.664 88.404C1.55467 79.7827 0 69.8187 0 58.512C0 45.0853 1.83733 33.496 5.512 23.744C9.18667 13.992 13.6387 6.07733 18.868 0H37.948C34.4147 4.09866 31.164 8.97466 28.196 14.628C25.3693 20.14 23.0373 26.5707 21.2 33.92C19.504 41.2693 18.656 49.5373 18.656 58.724C18.656 72.4333 20.776 82.8213 25.016 89.888C29.256 96.8133 34.8387 100.276 41.764 100.276C46.428 100.276 50.244 99.0747 53.212 96.672C56.3213 94.2693 58.5827 91.0187 59.996 86.92C61.4093 82.68 62.116 77.9453 62.116 72.716V38.584H79.924V72.716C79.924 78.5107 80.7013 83.528 82.256 87.768C83.952 91.8667 86.284 94.976 89.252 97.096C92.22 99.216 95.824 100.276 100.064 100.276C104.869 100.276 108.968 98.7213 112.36 95.612C115.893 92.5027 118.579 87.8387 120.416 81.62C122.395 75.4013 123.384 67.7693 123.384 58.724C123.384 49.82 122.607 41.8347 121.052 34.768C119.497 27.56 117.236 21.1293 114.268 15.476C111.441 9.68133 108.049 4.52267 104.092 0H123.172C126.988 4.38134 130.309 9.46934 133.136 15.264C135.963 20.9173 138.153 27.348 139.708 34.556C141.263 41.764 142.04 49.7493 142.04 58.512C142.04 69.8187 140.485 79.7827 137.376 88.404C134.267 97.0253 129.673 103.739 123.596 108.544C117.66 113.349 110.311 115.752 101.548 115.752C93.7747 115.752 87.4147 113.985 82.468 110.452C77.5213 106.777 73.8467 100.771 71.444 92.432H70.384C68.9707 97.944 66.9213 102.467 64.236 106C61.5507 109.392 58.2293 111.865 54.272 113.42C50.3147 114.975 45.7213 115.752 40.492 115.752Z"/></svg>
+          </div>
+          <div class="icon-size-label">36px</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10: Clear Space ═══ -->
+<div class="slide" data-slide="10">
+  <div class="caption">10 — Clear Space</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Protected area</div>
+  <div class="gap-xs"></div>
+  <div class="body center">No element may enter this zone.</div>
+  <div class="gap-md"></div>
+  <div style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+    <!-- Dashed boundary — behind the logo -->
+    <div style="position: absolute; inset: 0; border: 1px dashed var(--accent); border-radius: 4px; opacity: 0.4; pointer-events: none;"></div>
+    <!-- Dimension annotations -->
+    <div style="position: absolute; left: -36px; top: 50%; transform: translateY(-50%) rotate(-90deg); font-family: var(--mono); font-size: 10px; color: var(--accent); white-space: nowrap; opacity: 0.6;">0.66×</div>
+    <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 10px; color: var(--accent); white-space: nowrap; opacity: 0.6;">1× wordmark base</div>
+    <!-- Logo — full opacity, padded to define the clear space -->
+    <div style="padding: 48px 72px;">
+      <div class="lockup" style="font-size: 32px;">
+        <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+        <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+        <span class="omega-word">Omega</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11: Typography ═══ -->
+<div class="slide" data-slide="11">
+  <div class="caption">11 — Typography</div>
+  <div class="gap-sm"></div>
+  <div class="type-specimen">
+    <div class="type-row">
+      <div class="type-meta">LIGHT 300<br>48px+</div>
+      <div class="type-sample" style="font-weight: 300; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em;">Display headline</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">MEDIUM 500<br>24–32px</div>
+      <div class="type-sample" style="font-weight: 500; font-size: clamp(20px, 2.5vw, 28px); line-height: 1.2;">Section headline</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">REGULAR 400<br>16–18px</div>
+      <div class="type-sample" style="font-weight: 400; font-size: clamp(14px, 1.3vw, 17px); line-height: 1.6; color: var(--accent);">Body text for extended reading. Typography does the work — the letterforms carry the brand.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">MONO 400<br>14px</div>
+      <div class="type-sample" style="font-family: var(--mono); font-size: clamp(12px, 1vw, 14px); line-height: 1.5; color: var(--accent);">hash(content) = identity</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12: The Tagline ═══ -->
+<div class="slide" data-slide="12">
+  <div class="caption">12 — The Tagline</div>
+  <div class="gap-md"></div>
+  <div style="font-family: var(--mono); font-weight: 400; font-size: clamp(24px, 3.5vw, 44px); letter-spacing: 0.02em; color: var(--fg);">the result is saved</div>
+  <div class="gap-md"></div>
+  <div class="body center">
+    Always lowercase. A statement of fact, not a headline.<br>
+    Use below the lockup, at the end of docs, as a sign-off.
+  </div>
+</div>
+
+<!-- ═══ SLIDE 13: In Context ═══ -->
+<div class="slide" data-slide="13">
+  <div class="caption">13 — In Context</div>
+  <div class="gap-sm"></div>
+  <div class="context-row">
+    <div class="cli-block">
+      <div><span class="cli-prompt">$</span> npx omega-code</div>
+      <div class="gap-xs"></div>
+      <div>ω Omega Code v1.0.0</div>
+      <div><span class="cli-green">✓</span> Memory loaded <span class="cli-dim">(847 items)</span></div>
+      <div><span class="cli-green">✓</span> Obligations resolved</div>
+      <div class="gap-xs"></div>
+      <div class="cli-dim">Ready. The result is saved.</div>
+    </div>
+    <div class="product-card">
+      <div class="lockup" style="font-size: 14px; margin-bottom: 16px;">
+        <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+        <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+        <span class="omega-word">Omega</span>
+      </div>
+      <div class="card-title">Memory that compounds</div>
+      <div class="card-body">Content-addressed storage. Every interaction persists. Day 1 becomes day 100.</div>
+      <div class="card-cta">npx omega-code →</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 14: Incorrect Usage ═══ -->
+<div class="slide" data-slide="14">
+  <div class="caption">14 — Incorrect Usage</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">What not to do</div>
+  <div class="gap-md"></div>
+  <div class="donts-grid">
+    <div class="dont-item">
+      <div class="example" style="transform: rotate(15deg);">
+        <span class="lockup" style="font-size: 18px;">
+          <span style="font-size: calc(1em * 1.35);">ω</span>
+          <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+          Omega
+        </span>
+      </div>
+      <div class="dont-x">✕</div>
+      <div class="dont-label">Don't rotate</div>
+    </div>
+    <div class="dont-item">
+      <div class="example" style="background: linear-gradient(135deg, #6366F1, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 22px; font-family: var(--font);">ω Omega</div>
+      <div class="dont-x">✕</div>
+      <div class="dont-label">Don't use color</div>
+    </div>
+    <div class="dont-item">
+      <div class="example" style="text-shadow: 0 0 20px var(--fg); font-size: 22px; font-family: var(--font);">ω Omega</div>
+      <div class="dont-x">✕</div>
+      <div class="dont-label">Don't add effects</div>
+    </div>
+    <div class="dont-item">
+      <div class="example">
+        <span class="lockup" style="font-size: 18px;">
+          <span style="font-size: 1em;">ω</span>
+          <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+          Omega
+        </span>
+      </div>
+      <div class="dont-x">✕</div>
+      <div class="dont-label">Don't skip scaling</div>
+    </div>
+    <div class="dont-item">
+      <div class="example" style="-webkit-text-stroke: 1px var(--fg); color: transparent; font-size: 22px; font-family: var(--font);">ω Omega</div>
+      <div class="dont-x">✕</div>
+      <div class="dont-label">Don't outline</div>
+    </div>
+    <div class="dont-item">
+      <div class="example" style="font-size: 22px; font-family: var(--font); transform: scaleX(1.4);">ω Omega</div>
+      <div class="dont-x">✕</div>
+      <div class="dont-label">Don't distort</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 15: Proof Notation ═══ -->
+<div class="slide" data-slide="15">
+  <div class="caption">15a — Brand Pattern · Proof Notation</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Built on real math</div>
+  <div class="gap-xs"></div>
+  <div class="body center">Lean4 syntax as subtle texture. 10–20% opacity. JetBrains Mono.</div>
+  <div class="gap-md"></div>
+  <div class="pattern-canvas" id="proof-canvas"></div>
+</div>
+
+<!-- ═══ SLIDE 16: Omega Grid ═══ -->
+<div class="slide" data-slide="16">
+  <div class="caption">15b — Brand Pattern · Omega Grid</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Convergence</div>
+  <div class="gap-xs"></div>
+  <div class="body center">The ω repeated, fading toward edges, strong at center.</div>
+  <div class="gap-md"></div>
+  <div class="omega-grid-pattern" id="omega-grid"></div>
+</div>
+
+<!-- ═══ SLIDE 17: Orbital ═══ -->
+<div class="slide" data-slide="17">
+  <div class="caption">15c — Brand Pattern · Orbital</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Gravitational center</div>
+  <div class="gap-xs"></div>
+  <div class="body center">Elliptical orbits. ω as attractor. Elements resolving toward center.</div>
+  <div class="gap-md"></div>
+  <div class="orbital-container" id="orbital"></div>
+</div>
+
+<!-- ═══ SLIDE 18: Summary ═══ -->
+<div class="slide" data-slide="18">
+  <div class="caption">16 — Summary</div>
+  <div class="gap-sm"></div>
+  <div class="headline center">Specifications</div>
+  <div class="gap-md"></div>
+  <div class="summary-grid">
+    <div class="summary-item">
+      <div class="s-label">Typeface</div>
+      <div class="s-value">Outfit</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Code Font</div>
+      <div class="s-value">JetBrains Mono</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Background</div>
+      <div class="s-value">#FAFAF9 / #18181B</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Foreground</div>
+      <div class="s-value">#18181B / #FAFAF9</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Accent</div>
+      <div class="s-value">#78716C / #A8A29E</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Symbol Scale</div>
+      <div class="s-value">×1.35</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Lockup Gap</div>
+      <div class="s-value">×0.28</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Min Size</div>
+      <div class="s-value">14px lockup · 16px symbol</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Clear Space</div>
+      <div class="s-value">1× horiz · 0.66× vert</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-label">Icon Radius</div>
+      <div class="s-value">22%</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 19: Closing ═══ -->
+<div class="slide" data-slide="19">
+  <div class="gap-md"></div>
+  <div class="lockup" style="font-size: clamp(36px, 5vw, 56px); margin-bottom: 3vh;">
+    <span class="omega-symbol" style="font-size: calc(1em * 1.35);">ω</span>
+    <span style="width: calc(1em * 0.28); display: inline-block;"></span>
+    <span class="omega-word">Omega</span>
+  </div>
+  <div class="divider" style="margin: 0 auto 3vh;"></div>
+  <div class="display center" style="font-size: clamp(28px, 3.5vw, 48px);">The brand is resolved.</div>
+  <div class="gap-lg"></div>
+  <div style="font-family: var(--mono); font-size: clamp(11px, 1vw, 13px); color: var(--accent); letter-spacing: 0.06em;">the result is saved</div>
+</div>
+
+</div><!-- end .deck -->
+
+<!-- Navigation -->
+<nav class="nav">
+  <button onclick="prev()" aria-label="Previous slide">←</button>
+  <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+  <span id="counter">1 / 20</span>
+  <button onclick="next()" aria-label="Next slide">→</button>
+</nav>
+
+<script>
+// ─── Slide Engine ───
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+function goTo(n) {
+  if (n < 0 || n >= total) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+  document.getElementById('progress').style.width = `${((current + 1) / total) * 100}%`;
+}
+
+function next() { goTo(current + 1); }
+function prev() { goTo(current - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); goTo(0); }
+  if (e.key === 'ArrowDown') { e.preventDefault(); goTo(total - 1); }
+  if (e.key === 'd') { toggleTheme(); }
+});
+
+// Touch support
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 60) { dx < 0 ? next() : prev(); }
+});
+
+// ─── Theme ───
+function toggleTheme() {
+  document.documentElement.classList.toggle('dark');
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  document.querySelector('.theme-toggle').textContent = isDark ? 'Dark' : 'Light';
+}
+
+// ─── Proof Notation Pattern ───
+function renderProofCanvas() {
+  const container = document.getElementById('proof-canvas');
+  if (!container) return;
+
+  const lines = [
+    'theorem resolution_complete :',
+    '  ∀ (cas : CAS) (ob : Obligation),',
+    '    cas.contains ob.hash →',
+    '    ob.resolved = true := by',
+    '  intro cas ob h_contains',
+    '  exact cas.verify_resolution h_contains',
+    '',
+    'def memory_compound (m : Memory) :',
+    '  Memory :=',
+    '  { items := m.items ++ m.pending,',
+    '    hash  := hash (m.items ++ m.pending),',
+    '    proof := m.proof.extend }',
+    '',
+    'axiom permanence :',
+    '  ∀ (x : Result), saved x → ∀ t, accessible x t',
+  ];
+
+  container.innerHTML = '';
+  container.style.padding = '32px 36px';
+  container.style.fontFamily = 'var(--mono)';
+  container.style.fontSize = '13px';
+  container.style.lineHeight = '1.85';
+  container.style.overflow = 'hidden';
+  container.style.position = 'relative';
+
+  const code = document.createElement('div');
+  code.style.opacity = '0.22';
+  code.style.color = 'var(--fg)';
+  code.style.whiteSpace = 'pre';
+  code.innerHTML = lines.join('\n');
+  container.appendChild(code);
+
+  // Floating omega
+  const omega = document.createElement('div');
+  omega.textContent = 'ω';
+  omega.style.cssText = `
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-family: var(--font); font-size: 96px; font-weight: 300;
+    color: var(--fg); opacity: 0.12;
+  `;
+  container.appendChild(omega);
+}
+
+// ─── Omega Grid Pattern ───
+function renderOmegaGrid() {
+  const grid = document.getElementById('omega-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const cols = 11, rows = 9;
+  const cx = (cols - 1) / 2, cy = (rows - 1) / 2;
+  const maxDist = Math.sqrt(cx * cx + cy * cy);
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const cell = document.createElement('div');
+      cell.classList.add('grid-cell');
+      cell.textContent = 'ω';
+
+      const dist = Math.sqrt((c - cx) ** 2 + (r - cy) ** 2);
+      const norm = dist / maxDist;
+      // Stronger falloff curve — center punches harder
+      const t = 1 - norm;
+      const opacity = Math.max(0.05, t * t * 0.9 + t * 0.1);
+      const size = 12 + t * t * 18;
+
+      cell.style.opacity = opacity;
+      cell.style.fontSize = `${size}px`;
+      cell.style.color = 'var(--fg)';
+
+      // Center cell is hero
+      if (r === Math.floor(rows / 2) && c === Math.floor(cols / 2)) {
+        cell.style.opacity = '1';
+        cell.style.fontSize = '38px';
+        cell.style.fontWeight = '400';
+      }
+
+      grid.appendChild(cell);
+    }
+  }
+}
+
+// ─── Orbital Pattern ───
+let orbitalRaf = null;
+function renderOrbital() {
+  const container = document.getElementById('orbital');
+  if (!container) return;
+  if (orbitalRaf) cancelAnimationFrame(orbitalRaf);
+  container.innerHTML = '';
+
+  // Center omega
+  const center = document.createElement('div');
+  center.className = 'orbital-center';
+  center.textContent = 'ω';
+  container.appendChild(center);
+
+  const w = container.offsetWidth || 560;
+  const h = container.offsetHeight || 560;
+
+  // Scale orbits to container size
+  const scale = Math.min(w, h) / 560;
+  const orbits = [
+    { rx: 75*scale,  ry: 48*scale,  rotation: 0,    speed: 0.0007, size: 6, phase: 0 },
+    { rx: 110*scale, ry: 68*scale,  rotation: 32,   speed: 0.00055, size: 5.5, phase: 1.2 },
+    { rx: 145*scale, ry: 88*scale,  rotation: 65,   speed: 0.00042, size: 5, phase: 2.8 },
+    { rx: 175*scale, ry: 105*scale, rotation: 108,  speed: 0.00033, size: 4.5, phase: 0.7 },
+    { rx: 205*scale, ry: 125*scale, rotation: 150,  speed: 0.00026, size: 4, phase: 4.1 },
+    { rx: 235*scale, ry: 140*scale, rotation: 205,  speed: 0.0002, size: 3.5, phase: 5.5 },
+    { rx: 260*scale, ry: 152*scale, rotation: 260,  speed: 0.00016, size: 3, phase: 3.3 },
+  ];
+
+  // SVG for orbit rings
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
+  svg.style.cssText = 'position: absolute; top: 0; left: 0; pointer-events: none;';
+
+  orbits.forEach((o) => {
+    const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+    ellipse.setAttribute('cx', w / 2);
+    ellipse.setAttribute('cy', h / 2);
+    ellipse.setAttribute('rx', o.rx);
+    ellipse.setAttribute('ry', o.ry);
+    ellipse.setAttribute('fill', 'none');
+    ellipse.setAttribute('stroke-width', '1');
+    ellipse.setAttribute('transform', `rotate(${o.rotation} ${w/2} ${h/2})`);
+    ellipse.style.stroke = 'var(--accent)';
+    ellipse.style.opacity = '0.3';
+    svg.appendChild(ellipse);
+  });
+  container.appendChild(svg);
+
+  // Create particle DOM elements
+  const particles = orbits.map((o) => {
+    const el = document.createElement('div');
+    el.style.cssText = `
+      position: absolute;
+      width: ${o.size}px; height: ${o.size}px;
+      border-radius: 50%;
+      background: var(--accent);
+      pointer-events: none;
+      will-change: transform;
+    `;
+    container.appendChild(el);
+    return el;
+  });
+
+  // Animate with requestAnimationFrame for true elliptical motion
+  function animate(time) {
+    orbits.forEach((o, i) => {
+      const angle = o.phase + time * o.speed;
+      const rad = o.rotation * Math.PI / 180;
+      // Parametric ellipse point
+      const ex = o.rx * Math.cos(angle);
+      const ey = o.ry * Math.sin(angle);
+      // Rotate by orbit rotation
+      const px = ex * Math.cos(rad) - ey * Math.sin(rad);
+      const py = ex * Math.sin(rad) + ey * Math.cos(rad);
+      particles[i].style.transform = `translate(${w/2 + px - o.size/2}px, ${h/2 + py - o.size/2}px)`;
+    });
+    orbitalRaf = requestAnimationFrame(animate);
+  }
+  orbitalRaf = requestAnimationFrame(animate);
+}
+
+// ─── Initialize ───
+goTo(0);
+renderProofCanvas();
+renderOmegaGrid();
+renderOrbital();
+</script>
+
+</body>
+</html>

@@ -1,47 +1,334 @@
 @import "@radix-ui/themes/styles.css";
+@import "@radix-ui/colors/sand.css";
+@import "@radix-ui/colors/sand-dark.css";
+@import "@radix-ui/colors/grass.css";
+@import "@radix-ui/colors/grass-dark.css";
+@import "@radix-ui/colors/blue.css";
+@import "@radix-ui/colors/blue-dark.css";
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/red-dark.css";
 
-/* Omega brand tokens (light mode) */
-:root {
-  --omega-bg: #fafaf9;
-  --omega-fg: #18181b;
-  --omega-accent: #78716c;
+/* ───── Brand tokens ───── */
+:root,
+.light,
+.light-theme {
+  --omega-bg: var(--sand-1);
+  --omega-fg: var(--sand-12);
+  --omega-accent: var(--sand-11);
+  --omega-border: var(--sand-6);
+  --omega-border-hover: var(--sand-7);
+  --omega-success: var(--grass-9);
+  --omega-interactive: var(--blue-9);
+  --omega-error: var(--red-9);
+}
+.dark,
+.dark-theme {
+  --omega-bg: var(--sand-1);
+  --omega-fg: var(--sand-12);
+  --omega-accent: var(--sand-11);
+  --omega-border: var(--sand-6);
+  --omega-border-hover: var(--sand-7);
+  --omega-success: var(--grass-9);
+  --omega-interactive: var(--blue-9);
+  --omega-error: var(--red-9);
 }
 
-/* Radix Themes overrides for Omega identity */
+/* ───── Radix overrides ───── */
 .radix-themes {
   --default-font-family: var(--font-outfit), system-ui, sans-serif;
   --heading-font-family: var(--font-outfit), system-ui, sans-serif;
   --code-font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   --scaling: 1;
 }
-
-/* Light theme: warm stone background and foreground */
 .radix-themes:not(.dark-theme) {
-  --color-background: var(--omega-bg);
-  --color-panel-solid: var(--omega-bg);
-  --gray-1: var(--omega-bg);
-  --gray-2: #f5f5f4;
-  --gray-3: #e7e5e4;
-  --gray-4: #d6d3d1;
-  --gray-5: #a8a29e;
-  --gray-6: #78716c;
-  --gray-7: #57534e;
-  --gray-8: #44403c;
-  --gray-9: #292524;
-  --gray-11: var(--omega-fg);
-  --gray-12: var(--omega-fg);
+  --color-background: var(--sand-1);
+  --color-panel-solid: var(--sand-2);
+  --gray-1: var(--sand-1);
+  --gray-2: var(--sand-2);
+  --gray-3: var(--sand-3);
+  --gray-4: var(--sand-4);
+  --gray-5: var(--sand-5);
+  --gray-6: var(--sand-6);
+  --gray-7: var(--sand-7);
+  --gray-8: var(--sand-8);
+  --gray-9: var(--sand-9);
+  --gray-10: var(--sand-10);
+  --gray-11: var(--sand-11);
+  --gray-12: var(--sand-12);
+}
+.radix-themes.dark-theme {
+  --color-background: var(--sand-1);
+  --color-panel-solid: var(--sand-2);
+  --gray-1: var(--sand-1);
+  --gray-2: var(--sand-2);
+  --gray-3: var(--sand-3);
+  --gray-4: var(--sand-4);
+  --gray-5: var(--sand-5);
+  --gray-6: var(--sand-6);
+  --gray-7: var(--sand-7);
+  --gray-8: var(--sand-8);
+  --gray-9: var(--sand-9);
+  --gray-10: var(--sand-10);
+  --gray-11: var(--sand-11);
+  --gray-12: var(--sand-12);
 }
 
-/* Base document */
+/* ───── Base ───── */
 html {
   scroll-behavior: smooth;
 }
-
+html.dark {
+  color-scheme: dark;
+}
 body {
-  background: var(--omega-bg);
-  color: var(--omega-fg);
+  background: var(--color-background);
+  color: var(--gray-12);
 }
 
+/* ───── Hero ───── */
+.hero-section {
+  background-color: var(--gray-1);
+}
+
+/* ───── Section rhythm ───── */
+.section-movement {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  border-top: 1px solid var(--gray-3);
+}
+@media (min-width: 768px) {
+  .section-movement {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-movement {
+    padding-top: 9rem;
+    padding-bottom: 9rem;
+  }
+}
+
+.section-alt {
+  background-color: var(--gray-2);
+}
+
+/* ───── Glass Card ───── */
+.glass-card {
+  background: color-mix(in srgb, var(--gray-2) 60%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--gray-4);
+  border-radius: var(--radius-3);
+  transition:
+    border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.glass-card:hover {
+  border-color: var(--gray-6);
+  box-shadow:
+    0 0 0 1px var(--gray-5),
+    0 4px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-card:hover {
+    transform: none;
+  }
+}
+
+/* ───── Gradient Border (featured cards) ───── */
+.gradient-border {
+  position: relative;
+  border: none;
+  background-clip: padding-box;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    var(--gray-6),
+    var(--gray-4),
+    var(--gray-8),
+    var(--gray-4),
+    var(--gray-6)
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  animation: border-rotate 8s linear infinite;
+}
+@keyframes border-rotate {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+.gradient-border:hover::before {
+  background: conic-gradient(
+    from 0deg,
+    var(--gray-8),
+    var(--gray-5),
+    var(--gray-10),
+    var(--gray-5),
+    var(--gray-8)
+  );
+}
+
+/* ───── Stat glow ───── */
+.stat-glow {
+  text-shadow: 0 0 40px color-mix(in srgb, var(--gray-12) 12%, transparent);
+}
+
+/* ───── Shimmer badge ───── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+.shimmer-badge {
+  background: linear-gradient(
+    90deg,
+    var(--gray-12) 0%,
+    var(--gray-9) 40%,
+    var(--gray-12) 60%,
+    var(--gray-12) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ───── Float animation ───── */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.float {
+  animation: float 4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .float {
+    animation: none;
+  }
+}
+
+/* ───── Pulse arrow ───── */
+@keyframes pulse-right {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+}
+.pulse-arrow {
+  animation: pulse-right 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* ───── Old omega-card (keep for backward compat) ───── */
+.omega-card {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.omega-card:hover {
+  border-color: var(--gray-7);
+  box-shadow: 0 0 0 1px var(--gray-6), 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .omega-card:hover {
+    transform: none;
+  }
+}
+
+/* ───── Nav ───── */
+.nav-border-on-scroll {
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  background-color: color-mix(in srgb, var(--color-background) 80%, transparent);
+}
 .nav-border-on-scroll.scrolled {
-  border-bottom-color: rgba(24, 24, 27, 0.08);
+  border-bottom-color: var(--gray-4);
+}
+@media (min-width: 768px) {
+  .nav-mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .nav-desktop {
+    display: none !important;
+  }
+}
+
+/* Nav link hover */
+.nav-link {
+  position: relative;
+  transition: color 0.15s ease;
+}
+.nav-link:hover {
+  color: var(--gray-12) !important;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gray-12);
+  transform: scaleX(0);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ───── Utilities ───── */
+.transition-omega {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.skip-link:focus {
+  left: var(--space-4);
+  top: var(--space-4);
+}
+
+/* Terminal cursor */
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.2em;
+  background-color: var(--gray-11);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: terminal-blink 1s step-end infinite;
+}
+@keyframes terminal-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Focus visible */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--omega-interactive);
+  outline-offset: 2px;
 }

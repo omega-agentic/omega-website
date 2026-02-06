@@ -1,0 +1,27 @@
+# Omega — omega.ms
+
+Infrastructure for intelligent agents. Memory that compounds. Execution that's provable. A wire protocol that works.
+
+## Documentation Index
+
+Fetch this file to discover all pages before exploring further.
+
+## Pages
+
+- Home: https://omega.ms/
+- Omega Boost (product): https://omega.ms/boost
+- Omega Code (coming soon): https://omega.ms/code
+- Technology: https://omega.ms/technology
+- About: https://omega.ms/about
+
+## Key sections
+
+- Boost install: https://omega.ms/boost#install
+- Technology SIGIL: https://omega.ms/technology#sigil
+- Technology stack: https://omega.ms/technology#stack
+- Technology research: https://omega.ms/technology#research
+- Code waitlist: https://omega.ms/code#waitlist
+
+## For agents
+
+When requesting content, you may send Accept: text/markdown to receive a Markdown representation of pages where available. Use this index to discover structure first.

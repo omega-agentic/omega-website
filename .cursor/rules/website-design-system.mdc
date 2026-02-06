@@ -1,0 +1,83 @@
+---
+description: Design system conventions for all pages on the Omega website
+globs:
+  - "app/**/*.tsx"
+  - "components/**/*.tsx"
+  - "app/globals.css"
+alwaysApply: false
+---
+
+# Omega Website Design System
+
+Every page and component on the Omega website must follow these conventions to maintain visual consistency.
+
+## Card System
+
+- **Default card**: Use `className="glass-card"` — frosted glass background with backdrop-blur, subtle border, hover lift. Never use raw bordered boxes or inline `backgroundColor`/`border` combos.
+- **Featured card**: Use `className="glass-card gradient-border"` — adds an animated conic-gradient border via pseudo-element. Reserve for primary/featured items (e.g. the Boost product card).
+- **Never** use `.omega-card` for new components (kept only for backward compatibility). Always use `.glass-card`.
+- **Never** add per-card hover handlers for border/shadow/transform. The `.glass-card` class handles all hover states globally.
+
+## Section Structure
+
+Every content section follows this pattern:
+
+```
+SectionLabel → Heading → Text (optional subtext) → Content (grid, cards, etc.)
+```
+
+- Wrap content in `StaggerReveal` for scroll-triggered entrance animations.
+- Use `className="section-movement"` on every `<Section>` for consistent vertical padding and top border.
+- Use `className="section-alt"` on alternating sections for subtle background differentiation.
+
+## Typography
+
+| Element | Font | Weight | Color |
+|---|---|---|---|
+| Headings | `var(--font-outfit)` | 300 (light) | `var(--gray-12)` |
+| Body text | `var(--font-outfit)` | 400 | `var(--gray-11)` |
+| Section labels | `var(--font-jetbrains-mono)` | 400 | `var(--gray-9)` |
+| Card labels | `var(--font-jetbrains-mono)` | 400 | `var(--gray-10)` |
+| Code / terminals | `var(--font-jetbrains-mono)` | 400 | `var(--gray-11)` |
+| Secondary/muted | `var(--font-outfit)` | 400 | `var(--gray-10)` |
+
+- Headings use `letterSpacing: "-0.03em"` and `lineHeight: 1.1`.
+- Body text uses `lineHeight: 1.65` to `1.7`.
+- Section labels are rendered via `SectionLabel` component — monospace, 11px, `[bracketed]`.
+
+## Color Hierarchy
+
+- `--gray-12`: Primary text, headings
+- `--gray-11`: Body copy, readable paragraphs
+- `--gray-10`: Secondary text, card labels, italic details
+- `--gray-9`: Muted text, section labels, timestamps
+- `--gray-8`: Decorative text, icons, large card numbers
+- `--gray-6` / `--gray-5`: Borders, dividers (hover states brighten these)
+- `--gray-4`: Default card borders, subtle separators
+- `--gray-3`: Subtle backgrounds (section-alt)
+- `--gray-2`: Card backgrounds (glass-card base)
+
+## Animation
+
+- **Brand easing**: `[0.22, 1, 0.36, 1]` — use `BRAND_EASING` from `@/lib/constants`. In Framer Motion, always cast as `[number, number, number, number]`.
+- **Stagger reveals**: Use `StaggerReveal` with `staggerChildren={0.06}` to `{0.1}` and `duration={0.5}`.
+- **Float**: Use `className="float"` for gentle 3px bob animation (hero omega, decorative elements).
+- **Shimmer**: Use `className="shimmer-badge"` for slowly shimmering text (e.g. "AVAILABLE" badge).
+- **Stat glow**: Use `className="stat-glow"` for subtle text-shadow on large stat numbers.
+- **Pulse arrow**: Use `className="pulse-arrow"` for animated directional arrows.
+- **Reduced motion**: Always respect `useReducedMotion()` from Framer Motion. Provide static fallbacks.
+
+## Component Rules
+
+- Use Radix Theme components (`Box`, `Flex`, `Grid`, `Text`, `Heading`, `Button`, `Section`, `Container`, etc.) for all layout and typography. See the `radix-themes.mdc` rule.
+- Never use raw `<div>`, `<p>`, `<h1>`, `<a>`, `<button>` when a Radix equivalent exists.
+- Use `Box asChild` with semantic elements (`<span>`, `<header>`, `<footer>`) when you need the HTML tag.
+- `InstallTabs` for tabbed terminal displays. `AnimatedTerminal` for single terminal blocks.
+- `AnimatedStatBlock` for large stat numbers with intersection-observer-triggered animation.
+
+## File Organization
+
+- Sections live in `components/sections/` — one file per homepage section.
+- Reusable UI primitives live in `components/ui/`.
+- Layout components (nav, footer) live in `components/layout/`.
+- Constants (easing, durations, offsets) live in `lib/constants.ts`.
