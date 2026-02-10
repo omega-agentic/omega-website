@@ -6,31 +6,75 @@ import {
   Flex,
   Heading,
   Text,
-  Grid,
   Box,
-  Separator,
 } from "@radix-ui/themes";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { StaggerReveal } from "@/components/ui/StaggerReveal";
+import { BentoGrid, BentoCell } from "@/components/ui/BentoGrid";
 import { BeforeAfterWire } from "@/components/ui/BeforeAfterWire";
 
-const PROBLEM_BLOCKS = [
-  {
-    icon: "~",
-    label: "THE WIRE",
-    body: "Every token carries 650 bytes of overhead. Redundant fields, null values, metadata repeated on every streaming chunk. For the token \u201c const\u201d \u2014 650 bytes.",
-  },
-  {
-    icon: "{",
-    label: "THE TOOLS",
-    body: "Tool call formats differ across every provider. Streaming chunks split mid-UTF8, mid-escape. Parsers guess at boundaries instead of knowing them.",
-  },
-  {
-    icon: "\u2205",
-    label: "THE MEMORY",
-    body: "Every session starts from zero. No persistence. No compounding. No attestation. Models get smarter every month. Agents start fresh every session.",
-  },
-] as const;
+function CodeDiffVisual() {
+  return (
+    <Box
+      className="glass-card"
+      style={{
+        padding: "var(--space-3)",
+        fontFamily: "var(--font-jetbrains-mono), monospace",
+        fontSize: "11px",
+        lineHeight: 1.6,
+        color: "var(--gray-10)",
+      }}
+    >
+      <Text as="p" size="1" style={{ color: "var(--red-9)", marginBottom: "var(--space-2)" }}>
+        — Chunks split mid-UTF8
+      </Text>
+      <Text as="p" size="1" style={{ color: "var(--grass-9)", marginTop: "var(--space-2)" }}>
+        + Typed state machine
+      </Text>
+    </Box>
+  );
+}
+
+function TimelineVisual() {
+  return (
+    <Flex gap="4" align="center" style={{ marginTop: "var(--space-3)" }}>
+      <Flex direction="column" align="center" gap="1">
+        <Text size="1" className="overline" style={{ color: "var(--gray-8)" }}>
+          Day 1
+        </Text>
+        <Box
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: "50%",
+            backgroundColor: "var(--gray-4)",
+          }}
+        />
+      </Flex>
+      <Box
+        style={{
+          flex: 1,
+          height: 2,
+          background: "linear-gradient(90deg, var(--gray-4), var(--gray-6))",
+        }}
+      />
+      <Flex direction="column" align="center" gap="1">
+        <Text size="1" className="overline" style={{ color: "var(--gray-8)" }}>
+          Day 100
+        </Text>
+        <Box
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: "50%",
+            backgroundColor: "var(--gray-6)",
+            boxShadow: "0 0 20px color-mix(in srgb, var(--gray-8) 30%, transparent)",
+          }}
+        />
+      </Flex>
+    </Flex>
+  );
+}
 
 export function ProblemMovement() {
   return (
@@ -52,11 +96,8 @@ export function ProblemMovement() {
           <Heading
             size="8"
             weight="light"
+            className="display-heading"
             style={{
-              fontFamily: "var(--font-outfit), system-ui, sans-serif",
-              fontWeight: 300,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.1,
               fontSize: "clamp(2rem, 4vw, 3.25rem)",
               maxWidth: "600px",
               color: "var(--gray-12)",
@@ -64,7 +105,9 @@ export function ProblemMovement() {
           >
             Intelligence arrived.
             <br />
-            The infrastructure didn&apos;t.
+            <span className="chrome-text-subtle">
+              The infrastructure didn&apos;t.
+            </span>
           </Heading>
           <Text
             as="p"
@@ -78,98 +121,72 @@ export function ProblemMovement() {
             }}
           >
             The models are extraordinary. The capability frontier advances every
-            month. But the infrastructure underneath was built for rapid research
-            iteration, not production agents. It served its purpose. Now agents
-            need more.
+            month. But the infrastructure underneath was built for rapid
+            research iteration, not production agents.
           </Text>
-
-          <Grid
-            columns={{ initial: "1", md: "3" }}
-            gap="4"
-            style={{ marginTop: "var(--space-6)" }}
-          >
-            {PROBLEM_BLOCKS.map((block) => (
-              <Box
-                key={block.label}
-                className="glass-card"
-                style={{ padding: "var(--space-5)" }}
-              >
-                <Flex align="center" gap="3" style={{ marginBottom: "var(--space-3)" }}>
-                  <Text
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      fontSize: "18px",
-                      lineHeight: 1,
-                      color: "var(--gray-8)",
-                    }}
-                  >
-                    {block.icon}
-                  </Text>
-                  <Text
-                    as="p"
-                    size="1"
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      fontSize: "11px",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: "var(--gray-10)",
-                    }}
-                  >
-                    {block.label}
-                  </Text>
-                </Flex>
-                <Text
-                  as="p"
-                  size="2"
-                  style={{
-                    fontFamily: "var(--font-outfit), system-ui, sans-serif",
-                    lineHeight: 1.65,
-                    color: "var(--gray-12)",
-                  }}
-                >
-                  {block.body}
-                </Text>
-              </Box>
-            ))}
-          </Grid>
-
-          <BeforeAfterWire />
-
-          <Box style={{ marginTop: "var(--space-7)" }}>
-            <Separator
-              size="4"
-              style={{ maxWidth: "120px", margin: "0 auto var(--space-6)" }}
-            />
-            <Flex direction="column" align="center" gap="2">
-              <Heading
-                size="5"
-                weight="light"
-                style={{
-                  fontFamily: "var(--font-outfit), system-ui, sans-serif",
-                  fontWeight: 300,
-                  textAlign: "center",
-                  maxWidth: "520px",
-                  lineHeight: 1.35,
-                  color: "var(--gray-12)",
-                }}
-              >
-                Every developer building on these APIs is solving the same
-                problems independently.
-              </Heading>
-              <Text
-                size="2"
-                style={{
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  color: "var(--gray-10)",
-                  fontSize: "13px",
-                }}
-              >
-                We thought it&apos;d be useful to solve them once, correctly.
-              </Text>
-            </Flex>
-          </Box>
         </StaggerReveal>
+
+        {/* Bento: THE WIRE (2-col with BeforeAfterWire), THE TOOLS (code diff), THE MEMORY (timeline) */}
+        <Box style={{ marginTop: "var(--space-7)" }}>
+          <BentoGrid columns={3}>
+            <BentoCell
+              span={2}
+              label="THE WIRE"
+              title="650 bytes of overhead"
+              body='Every token carries 650 bytes of redundant fields. For a single token like " const" — 650 bytes.'
+              visual={<BeforeAfterWire />}
+              visualPosition="bottom"
+            />
+            <BentoCell
+              span={1}
+              label="THE TOOLS"
+              title="Broken tool calls"
+              body="Tool call formats differ across every provider. Chunks split mid-UTF8, mid-escape. Parsers guess at boundaries."
+              visual={<CodeDiffVisual />}
+              visualPosition="bottom"
+            />
+            <BentoCell
+              span={1}
+              label="THE MEMORY"
+              title="Amnesia by default"
+              body="Every session starts from zero. No persistence. No compounding. Models get smarter monthly; agents start fresh every session."
+              visual={<TimelineVisual />}
+              visualPosition="bottom"
+            />
+          </BentoGrid>
+        </Box>
+
+        {/* Closing statement */}
+        <Box style={{ marginTop: "var(--space-8)" }}>
+          <div className="divider-gradient" style={{ maxWidth: "120px", margin: "0 auto var(--space-6)" }} />
+          <Flex direction="column" align="center" gap="2">
+            <Heading
+              size="5"
+              weight="light"
+              style={{
+                fontFamily: "var(--font-outfit), system-ui, sans-serif",
+                fontWeight: 300,
+                textAlign: "center",
+                maxWidth: "520px",
+                lineHeight: 1.35,
+                color: "var(--gray-12)",
+              }}
+            >
+              Every developer building on these APIs is solving the same
+              problems independently.
+            </Heading>
+            <Text
+              size="2"
+              style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                color: "var(--gray-10)",
+                fontSize: "13px",
+              }}
+            >
+              We thought it&apos;d be useful to solve them once, correctly.
+            </Text>
+          </Flex>
+        </Box>
       </Container>
     </Section>
   );

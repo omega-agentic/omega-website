@@ -14,9 +14,9 @@ import {
 import { StaggerReveal } from "@/components/ui/StaggerReveal";
 
 const BOOT_LINES = [
-  "$ npx omega-boost",
+  "$ bun run omega-boost",
   "",
-  "\u03c9 Omega Boost v1.0.0",
+  "Omega Boost v1.0.0",
   "\u2714 Proxy running on localhost:10557",
   "\u2714 Auto-detected: Cursor, Claude Code",
   "\u2714 Providers normalized: OpenAI, Anthropic, Baseten",
@@ -27,7 +27,7 @@ const BOOT_LINES = [
 function TerminalChrome({ children }: { children: React.ReactNode }) {
   return (
     <Box
-      className="glass-card"
+      className="glow-card"
       style={{
         overflow: "hidden",
         width: "100%",
@@ -115,17 +115,17 @@ export function ResolutionMovement() {
             <Heading
               size="8"
               weight="light"
+              className="display-heading"
               style={{
-                fontFamily: "var(--font-outfit), system-ui, sans-serif",
-                fontWeight: 300,
-                letterSpacing: "-0.03em",
-                lineHeight: 1.1,
                 fontSize: "clamp(2rem, 4vw, 3.5rem)",
                 maxWidth: "520px",
                 color: "var(--gray-12)",
               }}
             >
-              The end state is closer than you think.
+              The end state is{" "}
+              <span className="chrome-text-subtle">
+                closer than you think.
+              </span>
             </Heading>
 
             <TerminalChrome>
@@ -143,14 +143,29 @@ export function ResolutionMovement() {
               </pre>
             </TerminalChrome>
 
-            <Button size="4" variant="solid" highContrast asChild>
-              <Link href="/boost">Get Started</Link>
-            </Button>
+            <Flex gap="3" align="center" wrap="wrap" justify="center">
+              <Button
+                size="4"
+                variant="solid"
+                highContrast
+                className="btn-chrome"
+                asChild
+              >
+                <Link href="/boost">Get Started</Link>
+              </Button>
+              <Button size="4" variant="outline" asChild>
+                <a href="https://docs.omega.ms" target="_blank" rel="noopener noreferrer">
+                  Read the docs
+                </a>
+              </Button>
+              <Button size="4" variant="outline" asChild>
+                <Link href="/chat">Try Omega Chat</Link>
+              </Button>
+            </Flex>
           </StaggerReveal>
 
-          {/* Omega signature with float + glow */}
-          <Box style={{ position: "relative" }}>
-            {/* Faint radial glow behind omega */}
+          {/* Omega signature with full-width glow accent + stronger radial glow */}
+          <Box className="glow-accent" style={{ position: "relative", padding: "var(--space-8)" }}>
             <Box
               aria-hidden
               style={{
@@ -158,13 +173,13 @@ export function ResolutionMovement() {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                width: "200px",
-                height: "200px",
+                width: "280px",
+                height: "280px",
                 borderRadius: "50%",
                 background:
-                  "radial-gradient(ellipse at center, var(--gray-5) 0%, transparent 70%)",
-                opacity: 0.5,
-                filter: "blur(30px)",
+                  "radial-gradient(ellipse at center, var(--gray-5) 0%, var(--gray-4) 25%, transparent 70%)",
+                opacity: 0.7,
+                filter: "blur(40px)",
                 pointerEvents: "none",
               }}
             />
@@ -173,7 +188,7 @@ export function ResolutionMovement() {
               style={{
                 fontFamily: "var(--font-outfit), system-ui, sans-serif",
                 fontWeight: 300,
-                fontSize: "clamp(4rem, 8vw, 7rem)",
+                fontSize: "clamp(5rem, 10vw, 9rem)",
                 lineHeight: 1,
                 color: "var(--gray-6)",
                 marginTop: "var(--space-4)",

@@ -13,7 +13,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return (
       <Theme
         appearance="dark"
-        accentColor="blue"
+        accentColor="gray"
         grayColor="sand"
         radius="small"
         scaling="100%"
@@ -42,7 +42,7 @@ function ThemeWrapper({ children }: { children: React.ReactNode }) {
   return (
     <Theme
       appearance={appearance}
-      accentColor="blue"
+      accentColor="gray"
       grayColor="sand"
       radius="small"
       scaling="100%"

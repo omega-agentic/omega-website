@@ -112,15 +112,16 @@ export function ProductCard({
           <Button
             key={c.label}
             size="3"
-            variant={isPrimary ? "solid" : "soft"}
+            variant={isPrimary ? "solid" : "outline"}
             highContrast={isPrimary}
+            className={isPrimary ? "btn-chrome" : undefined}
             asChild
           >
             <Link href={c.href}>{c.label}</Link>
           </Button>
         ))}
         {singleCta && (
-          <Button size="3" variant="soft" asChild>
+          <Button size="3" variant="outline" asChild>
             <Link href={singleCta.href}>{singleCta.label}</Link>
           </Button>
         )}

@@ -3,32 +3,31 @@
 import {
   Section,
   Container,
-  Flex,
   Heading,
   Text,
   Box,
-  Grid,
 } from "@radix-ui/themes";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { StaggerReveal } from "@/components/ui/StaggerReveal";
 import { InstallTabs } from "@/components/ui/InstallTabs";
-import { ToolLogo } from "@/components/ui/ToolLogos";
+import { LogoTicker } from "@/components/ui/LogoTicker";
 
-const TOOLS = [
-  { name: "Cursor", desc: "AI IDE" },
-  { name: "Claude Code", desc: "Anthropic CLI" },
-  { name: "OpenCode", desc: "Terminal agent" },
-  { name: "Cline", desc: "VS Code agent" },
-  { name: "Aider", desc: "Pair programming" },
-  { name: "Windsurf", desc: "AI IDE" },
-  { name: "Continue", desc: "Open-source copilot" },
-  { name: "Any OpenAI-compatible client", desc: "BYOK" },
+const TOOL_ITEMS = [
+  { name: "Cursor", metric: "94% wire compression" },
+  { name: "Claude Code", metric: "94% wire compression" },
+  { name: "OpenCode", metric: "94% wire compression" },
+  { name: "Cline", metric: "94% wire compression" },
+  { name: "Aider", metric: "94% wire compression" },
+  { name: "Windsurf", metric: "94% wire compression" },
+  { name: "Continue", metric: "94% wire compression" },
+  { name: "Copilot", metric: "94% wire compression" },
+  { name: "Any OpenAI-compatible client", metric: "zero config" },
 ];
 
 const INSTALL_TAB_ITEMS = [
   {
     label: "Cursor",
-    terminal: `$ npx omega-boost
+    terminal: `$ bun run omega-boost
 
 Auto-detects Cursor and patches your config.
 Your existing API keys pass through untouched.`,
@@ -36,7 +35,7 @@ Your existing API keys pass through untouched.`,
   },
   {
     label: "Claude Code",
-    terminal: `$ npx omega-boost
+    terminal: `$ bun run omega-boost
 
 Auto-detects Claude Code. Patches the connection.
 Nothing else changes.`,
@@ -44,7 +43,7 @@ Nothing else changes.`,
   },
   {
     label: "OpenCode / Cline / Aider",
-    terminal: `$ npx omega-boost
+    terminal: `$ bun run omega-boost
 # or: set OPENAI_API_BASE=http://localhost:10557
 
 Use your existing API keys. That's it.`,
@@ -52,7 +51,7 @@ Use your existing API keys. That's it.`,
   },
   {
     label: "Any client",
-    terminal: `$ npx omega-boost
+    terminal: `$ bun run omega-boost
 # Point your base URL to localhost:10557
 
 BYOK. We never see your keys or your prompts.`,
@@ -71,16 +70,13 @@ export function CompatibilitySection() {
           <Heading
             size="8"
             weight="light"
+            className="display-heading"
             style={{
-              fontFamily: "var(--font-outfit), system-ui, sans-serif",
-              fontWeight: 300,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.1,
               fontSize: "clamp(2rem, 4vw, 3.25rem)",
               color: "var(--gray-12)",
             }}
           >
-            One command. Every tool.
+            One command. <span className="chrome-text-subtle">Every tool.</span>
           </Heading>
           <Text
             as="p"
@@ -96,51 +92,13 @@ export function CompatibilitySection() {
             Your tools. Your keys. Your machine.
           </Text>
 
-          {/* Tool grid */}
-          <Box style={{ marginTop: "var(--space-6)" }}>
-            <Grid
-              columns={{ initial: "2", sm: "4" }}
-              gap="3"
-            >
-              {TOOLS.map((tool) => (
-                <Box
-                  key={tool.name}
-                  className="glass-card"
-                  style={{
-                    padding: "var(--space-4)",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                  }}
-                >
-                  <ToolLogo name={tool.name} size={28} />
-                  <Text
-                    size="2"
-                    weight="medium"
-                    style={{
-                      fontFamily: "var(--font-outfit), system-ui, sans-serif",
-                      color: "var(--gray-12)",
-                    }}
-                  >
-                    {tool.name}
-                  </Text>
-                  <Text
-                    size="1"
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      color: "var(--gray-9)",
-                      fontSize: "11px",
-                    }}
-                  >
-                    {tool.desc}
-                  </Text>
-                </Box>
-              ))}
-            </Grid>
+          {/* Scrolling logo ticker */}
+          <Box style={{ marginTop: "var(--space-7)", marginBottom: "var(--space-7)" }}>
+            <LogoTicker items={TOOL_ITEMS} label="COMPATIBLE TOOLS" />
           </Box>
 
           {/* Install tabs */}
-          <Box style={{ marginTop: "var(--space-7)", maxWidth: "600px" }}>
+          <Box style={{ maxWidth: "600px" }}>
             <InstallTabs items={INSTALL_TAB_ITEMS} />
           </Box>
         </StaggerReveal>

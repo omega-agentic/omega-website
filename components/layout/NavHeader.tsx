@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 const NAV_LINKS: { href: string; label: string; badge?: string }[] = [
   { href: "/boost", label: "Boost" },
   { href: "/code", label: "Code", badge: "soon" },
+  { href: "/chat", label: "Chat" },
   { href: "/technology", label: "Technology" },
   { href: "/about", label: "About" },
 ];
@@ -109,7 +110,7 @@ export function NavHeader() {
 
             <Flex align="center" gap="3" className="nav-desktop">
               <ThemeToggle />
-              <Button size="2" variant="solid" highContrast asChild>
+              <Button size="2" variant="solid" highContrast className="btn-chrome" asChild>
                 <Link href="/boost">Get Started</Link>
               </Button>
             </Flex>
@@ -161,7 +162,7 @@ export function NavHeader() {
                     </Text>
                   </Link>
                 ))}
-                <Button size="3" variant="solid" highContrast asChild>
+                <Button size="3" variant="solid" highContrast className="btn-chrome" asChild>
                   <Link href="/boost" onClick={() => setMobileOpen(false)}>Get Started</Link>
                 </Button>
               </Flex>

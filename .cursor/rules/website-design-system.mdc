@@ -17,6 +17,27 @@ Every page and component on the Omega website must follow these conventions to m
 - **Featured card**: Use `className="glass-card gradient-border"` — adds an animated conic-gradient border via pseudo-element. Reserve for primary/featured items (e.g. the Boost product card).
 - **Never** use `.omega-card` for new components (kept only for backward compatibility). Always use `.glass-card`.
 - **Never** add per-card hover handlers for border/shadow/transform. The `.glass-card` class handles all hover states globally.
+- **Glow accent**: Use `className="glow-card glow-accent"` and set `--glow-color` for a soft radial glow behind key elements (Resend-style).
+
+## Shadow / elevation tokens
+
+- Use `var(--shadow-sm)`, `var(--shadow-md)`, `var(--shadow-lg)`, `var(--shadow-glow)` consistently across cards and interactive elements (see `globals.css`).
+
+## Section dividers
+
+- Use `className="section-divider"` for an animated gradient line between sections instead of plain `border-top: 1px solid`.
+
+## Bento layout
+
+- `.bento-grid` — CSS grid with 1px gap; use with `.bento-cell`, `.bento-span-2`, `.bento-span-3`, `.bento-span-row-2`.
+- `.bento-card-feature` — large featured card (span 2); collapses to span 1 on mobile.
+- `.bento-card` — standard card in bento grid (use with `glass-card`).
+
+## Scroll-reveal variants
+
+- `.reveal-slide-up`, `.reveal-slide-left`, `.reveal-slide-right` — horizontal/vertical slide reveals.
+- `.reveal-scale` — scale from 0.95 to 1.
+- Use for visual variety instead of every section using the same fade-up. All respect `prefers-reduced-motion`.
 
 ## Section Structure
 
@@ -74,6 +95,12 @@ SectionLabel → Heading → Text (optional subtext) → Content (grid, cards, e
 - Use `Box asChild` with semantic elements (`<span>`, `<header>`, `<footer>`) when you need the HTML tag.
 - `InstallTabs` for tabbed terminal displays. `AnimatedTerminal` for single terminal blocks.
 - `AnimatedStatBlock` for large stat numbers with intersection-observer-triggered animation.
+- `BentoGrid` + `BentoCell` for bento layout with span/rowSpan. `GlowCard` for cards with optional gradient border.
+- `LogoTicker` for infinite-scroll logo strip (items can include optional `metric` e.g. "95% compression").
+- `MetricRibbon` for horizontal scrolling stats strip.
+- `CodeBlock` for syntax-highlighted code with copy, line highlights, filename/language header.
+- `WireDiagram` for interactive protocol/architecture step diagrams. `InteractiveWireDemo` for the signature wire-compression pipe (tokens flowing raw → compressed).
+- `ProductCard` for product showcase cards.
 
 ## File Organization
 

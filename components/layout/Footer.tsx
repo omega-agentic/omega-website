@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Box, Container, Flex, Text, Grid } from "@radix-ui/themes";
 import { OmegaLockup } from "@/components/brand/OmegaLockup";
 import { useTheme } from "next-themes";
@@ -14,6 +15,7 @@ const FOOTER_COLUMNS: {
     links: [
       { href: "/boost", label: "Boost" },
       { href: "/code", label: "Code" },
+      { href: "/chat", label: "Chat" },
       { href: "https://docs.omega.ms", label: "Docs", external: true },
     ],
   },
@@ -42,7 +44,11 @@ const SOCIAL = [
 
 export function Footer() {
   const { resolvedTheme } = useTheme();
+  const pathname = usePathname();
   const logoVariant = resolvedTheme === "dark" ? "dark" : "light";
+
+  // Hide footer on full-screen pages
+  if (pathname === "/chat") return null;
 
   return (
     <Box asChild style={{ borderTop: "1px solid var(--gray-4)" }}>
