@@ -1,123 +1,104 @@
 "use client";
 
-import { Box, Flex, Text } from "@radix-ui/themes";
-import { CopyButton } from "@/components/ui/CopyButton";
+import { useState } from "react";
 
 interface CodeBlockProps {
-  /** Raw code string */
   code: string;
-  /** Language label shown in header */
   language?: string;
-  /** Filename shown in header */
-  filename?: string;
-  /** Show copy button (default true) */
-  copyable?: boolean;
-  /** Lines to highlight (1-indexed) */
   highlightLines?: number[];
-  /** Max height with scroll */
-  maxHeight?: string;
+  filename?: string;
 }
 
 export function CodeBlock({
   code,
   language,
-  filename,
-  copyable = true,
   highlightLines = [],
-  maxHeight,
+  filename,
 }: CodeBlockProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback
+    }
+  };
+
   const lines = code.split("\n");
 
   return (
-    <Box className="code-block" style={{ padding: 0, overflow: "hidden" }}>
-      {/* Header */}
-      {(filename || language || copyable) && (
-        <Flex
-          align="center"
-          justify="between"
+    <div className="code-block" style={{ position: "relative" }}>
+      {/* Header row: filename + language tag */}
+      {(filename || language) && (
+        <div
           style={{
-            padding: "var(--space-2) var(--space-4)",
-            borderBottom: "1px solid var(--gray-4)",
-            backgroundColor:
-              "color-mix(in srgb, var(--gray-3) 50%, transparent)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "var(--space-3)",
+            paddingBottom: "var(--space-3)",
+            borderBottom: "1px solid var(--border-subtle)",
           }}
         >
-          <Flex align="center" gap="3">
-            {/* Dots */}
-            <Flex gap="1">
-              <Box
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  backgroundColor: "var(--gray-6)",
-                }}
-              />
-              <Box
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  backgroundColor: "var(--gray-6)",
-                }}
-              />
-              <Box
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  backgroundColor: "var(--gray-6)",
-                }}
-              />
-            </Flex>
-            <Text
-              size="1"
+          {filename && (
+            <span style={{ fontSize: "11px", color: "var(--text-low)" }}>
+              {filename}
+            </span>
+          )}
+          {language && (
+            <span
               style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                color: "var(--gray-8)",
-                fontSize: "11px",
+                fontSize: "10px",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: "var(--text-low)",
+                marginLeft: "auto",
               }}
             >
-              {filename || language || ""}
-            </Text>
-          </Flex>
-          {copyable && <CopyButton text={code} />}
-        </Flex>
+              {language}
+            </span>
+          )}
+        </div>
       )}
 
-      {/* Code content */}
-      <Box
+      {/* Copy button */}
+      <button
+        onClick={handleCopy}
+        aria-label="Copy code"
         style={{
-          padding: "var(--space-4)",
-          maxHeight: maxHeight,
-          overflowY: maxHeight ? "auto" : undefined,
-          overflowX: "auto",
+          position: "absolute",
+          top: filename || language ? "calc(var(--space-5) + 28px)" : "var(--space-3)",
+          right: "var(--space-3)",
+          background: "none",
+          border: "none",
+          color: copied ? "var(--accent-green)" : "var(--text-low)",
+          cursor: "pointer",
+          padding: "var(--space-1)",
+          borderRadius: "var(--radius-sm)",
+          transition: "color 0.15s",
         }}
       >
-        <pre
-          style={{
-            margin: 0,
-            fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace",
-            fontSize: "13px",
-            lineHeight: 1.7,
-            color: "var(--gray-11)",
-          }}
-        >
-          {lines.map((line, i) => {
-            const lineNum = i + 1;
-            const isHighlighted = highlightLines.includes(lineNum);
-            return (
-              <span
-                key={i}
-                className={isHighlighted ? "code-line-highlight" : undefined}
-              >
-                {line}
-                {i < lines.length - 1 ? "\n" : ""}
-              </span>
-            );
-          })}
-        </pre>
-      </Box>
-    </Box>
+        {copied ? "✓" : "⎘"}
+      </button>
+
+      {/* Code lines */}
+      <pre style={{ margin: 0, overflow: "auto" }}>
+        {lines.map((line, i) => {
+          const isHighlighted = highlightLines.includes(i + 1);
+          return (
+            <span
+              key={i}
+              className={isHighlighted ? "code-line-highlight" : undefined}
+            >
+              {line}
+              {i < lines.length - 1 ? "\n" : ""}
+            </span>
+          );
+        })}
+      </pre>
+    </div>
   );
 }

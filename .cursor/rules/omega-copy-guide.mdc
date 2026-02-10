@@ -1,0 +1,30 @@
+# OmegaCode Copy Guide
+
+## The one rule
+Every sentence must answer: "What does the customer GET?"
+If it doesn't, delete it.
+
+## Voice
+- Confident, not arrogant
+- Specific, not superlative  
+- Developer-to-developer, not marketing-to-developer
+- Short sentences. Short paragraphs. Lots of whitespace.
+
+## Brand
+- Product name: "OmegaCode" (one word, capital C)
+- Domain: omegacode.ai
+- Install command: `bun run omega`
+- One unified product — no separate "Boost", "Code", "Chat" products
+- GitHub: github.com/omegacode-ai
+
+## Homepage flow
+1. Hook: what you get (5 seconds)
+2. Proof: metrics showing the improvement
+3. Evidence: before/after with real code
+4. Ease: 3 steps to install
+5. Depth: technical foundations (for curious developers)
+6. Features: unified feature grid (wire compression, typed framing, memory, verification)
+7. Close: CTA
+
+## Never explain OmegaCode's architecture on the homepage.
+The homepage sells benefits. /technology explains the architecture.
