@@ -1,6 +1,6 @@
 "use client";
 
-const DIV = "────────────────────────────────────────────────────────────";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 const PRINCIPLES = [
   {
@@ -24,31 +24,33 @@ const PRINCIPLES = [
 export function AboutContent() {
   return (
     <>
-      <h1 className="page-title">We build infrastructure for correct AI</h1>
-      <p className="page-subtitle">
-        The models improve every quarter. The infrastructure hasn&apos;t changed since 2021.
-        That&apos;s what we fix.
-      </p>
+      <ScrollReveal>
+        <h1 className="page-title">Infrastructure for correct AI</h1>
+        <p className="page-subtitle">
+          The models improve every quarter. The infrastructure hasn&apos;t changed since 2021.
+          That&apos;s what we fix.
+        </p>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* Principles */}
-      <section className="page-section">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Principles</div>
         <div className="page-grid-2">
-          {PRINCIPLES.map((p) => (
-            <div className="page-card" key={p.title}>
+          {PRINCIPLES.map((p, i) => (
+            <ScrollReveal className="page-card" key={p.title} delay={i * 80}>
               <div className="page-card-label">{p.title}</div>
               <div className="page-card-desc">{p.description}</div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
-      </section>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* The Name */}
-      <section className="page-section">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">The Name</div>
         <h2 className="page-section-heading">ω</h2>
         <p className="page-body">
@@ -56,23 +58,23 @@ export function AboutContent() {
           Where the result is saved. OmegaCode is built on that principle: every execution
           reaches its correct conclusion.
         </p>
-      </section>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* Team */}
-      <section className="page-section" id="team">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Team</div>
-        <div className="page-card" style={{ maxWidth: "320px" }}>
+        <ScrollReveal className="page-card" style={{ maxWidth: "320px" }}>
           <div className="page-card-label">Harrison Hines</div>
           <div className="page-card-desc">Founder</div>
-        </div>
-      </section>
+        </ScrollReveal>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* Company */}
-      <section className="page-section">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Company</div>
         <p className="page-body">
           OmegaCode · San Juan, PR
@@ -84,7 +86,7 @@ export function AboutContent() {
           {" · "}
           <a href="https://twitter.com/omegacode_ai" target="_blank" rel="noopener noreferrer">Twitter</a>
         </p>
-      </section>
+      </ScrollReveal>
     </>
   );
 }

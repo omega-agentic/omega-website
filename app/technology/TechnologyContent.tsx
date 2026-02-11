@@ -1,6 +1,6 @@
 "use client";
 
-const DIV = "────────────────────────────────────────────────────────────";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 const STACK_LAYERS = [
   { name: "OmegaCode", desc: "the proxy" },
@@ -21,13 +21,15 @@ const RESEARCH_LINKS = [
 export function TechnologyContent() {
   return (
     <>
-      <h1 className="page-title">How it works</h1>
-      <p className="page-subtitle">
-        From wire protocols to formal proofs. Seven layers, each solving a specific failure mode.
-      </p>
+      <ScrollReveal>
+        <h1 className="page-title">How it works</h1>
+        <p className="page-subtitle">
+          From wire protocols to formal proofs. Seven layers, each solving a specific failure mode.
+        </p>
+      </ScrollReveal>
 
       {/* The Stack */}
-      <section className="page-section" id="stack">
+      <ScrollReveal as="section" className="page-section" delay={0}>
         <div className="page-section-label">The Stack</div>
         <ul className="page-list">
           {STACK_LAYERS.map((layer) => (
@@ -37,12 +39,12 @@ export function TechnologyContent() {
             </li>
           ))}
         </ul>
-      </section>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* SIGIL */}
-      <section className="page-section" id="sigil">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">SIGIL</div>
         <h2 className="page-section-heading">The wire protocol</h2>
         <p className="page-body">
@@ -51,29 +53,29 @@ export function TechnologyContent() {
           Zero information loss.
         </p>
         <div className="page-grid-2">
-          <div className="page-card">
+          <ScrollReveal className="page-card" delay={0}>
             <div className="page-card-label">The Problem</div>
             <div className="page-card-desc">
               Every SSE chunk carries the full ChatCompletion object: model name, timestamps,
               null fields, role strings. For a single token like &ldquo;const&rdquo;, you get
               650 bytes of JSON wrapping 5 bytes of content.
             </div>
-          </div>
-          <div className="page-card">
+          </ScrollReveal>
+          <ScrollReveal className="page-card" delay={100}>
             <div className="page-card-label">The Fix</div>
             <div className="page-card-desc">
               SIGIL sends typed binary frames. A token frame is the varint tag + the UTF-8 bytes.
               A tool-call frame carries the complete typed invocation — name, arguments, status —
               in a single message. No reassembly. No regex.
             </div>
-          </div>
+          </ScrollReveal>
         </div>
-      </section>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* TRINITY */}
-      <section className="page-section" id="trinity">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Trinity</div>
         <h2 className="page-section-heading">The replay engine</h2>
         <p className="page-body">
@@ -83,12 +85,12 @@ export function TechnologyContent() {
         <div className="page-code">
           &ldquo;The execution is non-deterministic.{"\n"}The verification is not.&rdquo;
         </div>
-      </section>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* CONTINUITY */}
-      <section className="page-section" id="verification">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Continuity</div>
         <h2 className="page-section-heading">Formal verification</h2>
         <p className="page-body">
@@ -108,12 +110,12 @@ theorem continuity_correctness
     r₁ = r₂ := by
   exact deterministic_eval h_wf h_hermetic`}
         </div>
-      </section>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* CAS */}
-      <section className="page-section">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Content-Addressed Storage</div>
         <h2 className="page-section-heading">Hash is identity</h2>
         <p className="page-body">
@@ -121,12 +123,12 @@ theorem continuity_correctness
           output to the inputs that produced it. The coeffect algebra tracks which resources
           were consumed and ensures nothing leaks.
         </p>
-      </section>
+      </ScrollReveal>
 
-      <div className="page-divider" aria-hidden="true">{DIV}</div>
+      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* Research */}
-      <section className="page-section" id="research">
+      <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Open Research</div>
         <h2 className="page-section-heading">Everything is public</h2>
         <ul className="page-list">
@@ -136,17 +138,15 @@ theorem continuity_correctness
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  color: "var(--terminal-accent-bright)",
-                  textDecoration: "none",
-                }}
+                className="page-body"
+                style={{ color: "var(--terminal-accent-bright)", textDecoration: "none", margin: 0 }}
               >
                 {link.label} →
               </a>
             </li>
           ))}
         </ul>
-      </section>
+      </ScrollReveal>
     </>
   );
 }
