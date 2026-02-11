@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 
 /* ─── Data ─── */
-const TOOLS = ["Cursor", "Claude Code", "Copilot", "Cline", "OpenHands"];
+const TOOLS_FULL = ["Cursor", "Claude Code", "Copilot", "Cline", "OpenHands"];
+const TOOLS_SHORT = ["Cursor", "Claude", "Copilot", "Cline", "OpenHands"];
 const PROVIDERS = ["Anthropic", "OpenAI", "Gemini", "DeepSeek", "Groq"];
 
 const PARTICLES_PER_PATH = 2;
@@ -95,7 +96,7 @@ export function ProxyDiagram() {
     /* ── Particles ── */
     const particles: Particle[] = [];
     const now = performance.now();
-    for (let t = 0; t < TOOLS.length; t++) {
+    for (let t = 0; t < TOOLS_FULL.length; t++) {
       for (let j = 0; j < PARTICLES_PER_PATH; j++) {
         particles.push({
           progress: Math.random(),
@@ -122,6 +123,7 @@ export function ProxyDiagram() {
       ctx.clearRect(0, 0, w, h);
 
       /* ─── Layout — all spacing handled here ─── */
+      const TOOLS = w < 500 ? TOOLS_SHORT : TOOLS_FULL;
       const inset = 30;
       const padX = Math.max(w * 0.14, 60);
       const headerSize = 10;
@@ -193,7 +195,7 @@ export function ProxyDiagram() {
               p.phase = 1;
             } else {
               p.phase = 0;
-              p.toolIdx = Math.floor(Math.random() * TOOLS.length);
+              p.toolIdx = Math.floor(Math.random() * TOOLS_FULL.length);
               p.provIdx = Math.floor(Math.random() * PROVIDERS.length);
               p.delayUntil = t + Math.random() * RESPAWN_DELAY;
             }
@@ -256,10 +258,7 @@ export function ProxyDiagram() {
       ctx.fill(omegaPath);
       ctx.restore();
 
-      /* Sublabel */
-      ctx.font = `${Math.max(7, hubR * 0.28)}px ${monoFont}, monospace`;
-      ctx.fillStyle = C.labelDim;
-      ctx.fillText("OMEGACODE", hubX, hubY + hubR + Math.max(12, hubR * 0.5));
+      /* (sublabel removed) */
 
       /* ─── Tool nodes ─── */
       const labelFont = `${Math.max(9, Math.min(11, w * 0.017))}px ${monoFont}, monospace`;

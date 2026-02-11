@@ -10,14 +10,9 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <div style={{ paddingTop: 56 }}>
-      <section
-        style={{
-          padding: "var(--space-10) var(--space-5) var(--space-8)",
-          maxWidth: "var(--narrow)",
-          margin: "0 auto",
-        }}
-      >
+    <div className="blog-page-offset">
+      <section className="blog-page-content">
+
         <SectionReveal>
           <h1 className="type-h1" style={{ marginBottom: "var(--space-5)" }}>Blog</h1>
           <p className="type-body" style={{ marginBottom: "var(--space-7)" }}>
