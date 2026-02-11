@@ -1,0 +1,37 @@
+# OmegaCode Design System
+
+## Non-negotiable
+- Sand-based warm neutral colors only. No pure black/white.
+- Inter + JetBrains Mono only. No other fonts.
+- Dark mode default. Light mode secondary.
+- Green = correct/working. Red = broken/error. Nothing else.
+- Chrome metallic gradient for primary CTAs.
+
+## Layout
+- Max width: 1200px. Narrow: 720px.
+- Section padding: clamp(64px, 12vh, 128px) vertical
+- Content padding: clamp(16px, 4vw, 24px) horizontal
+
+## Components
+- Cards: .glass-card (--bg-subtle, --border-subtle, 16px radius)
+- Code: .code-block (--bg-element, JetBrains Mono 13px, copy btn)
+- Labels: .section-label (mono 12px uppercase, --text-low)
+- Buttons: .btn-chrome (chrome metallic gradient) / .btn-secondary (outlined)
+- Install: .install-block (large terminal command, green text, glass bg)
+- Logo ticker: LogoPill components with brand icons, not plain text
+
+## Motion
+- Reveals: translateY(16px), 0.6s, ease-out via global RevealProvider
+- Stagger: 60-120ms between children via transitionDelay
+- Metric count-up on scroll-into-view
+- Respect prefers-reduced-motion
+- No auto-playing animations
+
+## Copy Rules
+- NEVER use: blazingly fast, revolutionary, seamless, next-gen, best in class
+- ALWAYS lead with customer benefit, not feature description
+- ALWAYS use specific numbers
+- Brand name: "OmegaCode" (one word, capital C)
+- Domain: omegacode.ai
+- Install command: `bun run omega`
+- "the result is saved" always lowercase

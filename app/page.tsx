@@ -1,19 +1,21 @@
-import { HeroMovement } from "@/components/sections/HeroMovement";
-import { CompatibilitySection } from "@/components/sections/CompatibilitySection";
-import { ProblemMovement } from "@/components/sections/ProblemMovement";
-import { ThesisMovement } from "@/components/sections/ThesisMovement";
-import { ProductsMovement } from "@/components/sections/ProductsMovement";
-import { ResolutionMovement } from "@/components/sections/ResolutionMovement";
+import { HookSection } from "@/components/sections/home/HookSection";
+import { ProofSection } from "@/components/sections/home/ProofSection";
+import { ExperienceSection } from "@/components/sections/home/ExperienceSection";
+import { HowSection } from "@/components/sections/home/HowSection";
+import { DepthSection } from "@/components/sections/home/DepthSection";
+import { FeaturesSection } from "@/components/sections/home/FeaturesSection";
+import { CloseSection } from "@/components/sections/home/CloseSection";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main>
-      <HeroMovement />
-      <CompatibilitySection />
-      <ProblemMovement />
-      <ThesisMovement />
-      <ProductsMovement />
-      <ResolutionMovement />
-    </main>
+    <>
+      <HookSection />
+      <ProofSection />
+      <ExperienceSection />
+      <HowSection />
+      <DepthSection />
+      <FeaturesSection />
+      <CloseSection />
+    </>
   );
 }

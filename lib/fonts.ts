@@ -1,9 +1,9 @@
-import { Outfit, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 
-export const outfit = Outfit({
+export const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-inter",
   display: "swap",
 });
 

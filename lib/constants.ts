@@ -2,18 +2,18 @@
  * Omega brand constants — use everywhere for consistency.
  */
 
-/** Brand easing: things settling into place. Not springy. Inevitable. */
-export const BRAND_EASING = [0.22, 1, 0.36, 1] as const;
-export const BRAND_EASING_CSS = "cubic-bezier(0.22, 1, 0.36, 1)";
+/** Brand easing — things settling into place. */
+export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+export const EASE_OUT_CSS = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-/** Scroll reveal: duration (ms) */
-export const SCROLL_REVEAL_DURATION = 0.5;
-/** Scroll reveal: initial translateY (px) */
-export const SCROLL_REVEAL_OFFSET = 12;
+/** Scroll reveal */
+export const REVEAL_DURATION = 0.6;
+export const REVEAL_OFFSET = 16;
+export const STAGGER_DELAY = 0.06; // 60ms between children
 
-/** Hero ω draw-in animation duration (s) */
-export const HERO_DRAW_DURATION = 1.5;
-/** Resolution section breathing ω loop (s) */
-export const BREATHING_LOOP_DURATION = 4;
-/** Page transition duration (ms) */
-export const PAGE_TRANSITION_DURATION = 300;
+/** Layout */
+export const MAX_WIDTH = 1200;
+export const NARROW_WIDTH = 720;
+
+/** Omega pulse on close section */
+export const OMEGA_PULSE_DURATION = 4;

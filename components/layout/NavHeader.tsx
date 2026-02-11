@@ -1,24 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
-import { Box, Container, Flex, Button, Text } from "@radix-ui/themes";
-import { OmegaLockup } from "@/components/brand/OmegaLockup";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
-
-const NAV_LINKS: { href: string; label: string; badge?: string }[] = [
-  { href: "/boost", label: "Boost" },
-  { href: "/code", label: "Code", badge: "soon" },
-  { href: "/technology", label: "Technology" },
-  { href: "/about", label: "About" },
-];
 
 export function NavHeader() {
-  const { resolvedTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
+  const [useCasesOpen, setUseCasesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const logoVariant = resolvedTheme === "dark" ? "dark" : "light";
+  const useCasesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -26,149 +15,208 @@ export function NavHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (useCasesRef.current && !useCasesRef.current.contains(e.target as Node)) {
+        setUseCasesOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
+
   return (
-    <Box
-      asChild
+    <header
+      className={`nav-border-on-scroll ${scrolled ? "scrolled" : ""}`}
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         right: 0,
         zIndex: 50,
-        borderBottom: "1px solid transparent",
-        transition: "border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+        height: 56,
       }}
-      className={scrolled ? "nav-border-on-scroll scrolled" : "nav-border-on-scroll"}
     >
-      <header>
-        <Container size="4">
-          <Flex
-            justify="between"
-            align="center"
-            py="3"
-            style={{ minHeight: "56px" }}
+      <nav
+        style={{
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+          padding: "0 clamp(16px, 4vw, 24px)",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        {/* Logo */}
+        <Link
+          href="/"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "var(--space-2)",
+            textDecoration: "none",
+            color: "var(--text-primary)",
+            fontWeight: 500,
+            fontSize: "0.9375rem",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "Georgia, 'Times New Roman', serif",
+              fontSize: "20px",
+              lineHeight: 1,
+            }}
+            aria-hidden="true"
           >
-            <OmegaLockup size={16} asLink variant={logoVariant} className="nav-logo" />
+            ω
+          </span>
+          OmegaCode
+        </Link>
 
-            {/* Desktop nav */}
-            <Flex align="center" gap="5" className="nav-desktop">
-              {NAV_LINKS.map(({ href, label, badge }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="nav-link"
-                  style={{ textDecoration: "none" }}
-                >
-                  <Flex align="center" gap="2">
-                    <Text
-                      size="2"
-                      style={{
-                        color: "var(--gray-11)",
-                        fontFamily: "var(--font-outfit), system-ui, sans-serif",
-                        fontSize: "14px",
-                      }}
-                    >
-                      {label}
-                    </Text>
-                    {badge === "soon" && (
-                      <Text
-                        size="1"
-                        style={{
-                          color: "var(--gray-9)",
-                          fontFamily: "var(--font-jetbrains-mono), monospace",
-                          fontSize: "9px",
-                          letterSpacing: "0.05em",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        soon
-                      </Text>
-                    )}
-                  </Flex>
-                </Link>
-              ))}
-              <Link
-                href="https://docs.omega.ms"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="nav-link"
-                style={{ textDecoration: "none" }}
-              >
-                <Text
-                  size="2"
-                  style={{
-                    color: "var(--gray-11)",
-                    fontFamily: "var(--font-outfit), system-ui, sans-serif",
-                    fontSize: "14px",
-                  }}
-                >
-                  Docs
-                </Text>
-              </Link>
-            </Flex>
+        {/* Desktop nav */}
+        <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: "var(--space-5)" }}>
+          <Link href="/technology" className="nav-link">
+            Technology
+          </Link>
 
-            <Flex align="center" gap="3" className="nav-desktop">
-              <ThemeToggle />
-              <Button size="2" variant="solid" highContrast asChild>
-                <Link href="/boost">Get Started</Link>
-              </Button>
-            </Flex>
-
-            {/* Mobile */}
-            <Flex align="center" gap="3" className="nav-mobile">
-              <ThemeToggle />
-              <Button
-                size="2"
-                variant="ghost"
-                aria-label={mobileOpen ? "Close menu" : "Open menu"}
-                onClick={() => setMobileOpen((o) => !o)}
-                style={{
-                  color: "var(--gray-12)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                }}
-              >
-                {mobileOpen ? "\u2715" : "\u2261"}
-              </Button>
-            </Flex>
-          </Flex>
-
-          {/* Mobile dropdown */}
-          {mobileOpen && (
-            <Box
-              pb="4"
+          {/* Use Cases dropdown */}
+          <div ref={useCasesRef} style={{ position: "relative" }}>
+            <button
+              className="nav-link"
+              onClick={() => setUseCasesOpen(!useCasesOpen)}
               style={{
-                borderTop: "1px solid var(--gray-4)",
-                paddingTop: "var(--space-3)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                fontFamily: "var(--font-body)",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
               }}
-              className="nav-mobile"
             >
-              <Flex direction="column" gap="3">
-                {NAV_LINKS.map(({ href, label }) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setMobileOpen(false)}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Text
-                      size="3"
-                      style={{
-                        color: "var(--gray-12)",
-                        fontFamily: "var(--font-outfit), system-ui, sans-serif",
-                      }}
-                    >
-                      {label}
-                    </Text>
-                  </Link>
-                ))}
-                <Button size="3" variant="solid" highContrast asChild>
-                  <Link href="/boost" onClick={() => setMobileOpen(false)}>Get Started</Link>
-                </Button>
-              </Flex>
-            </Box>
-          )}
-        </Container>
-      </header>
-    </Box>
+              Use Cases
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ opacity: 0.5 }}>
+                <path d="M2.5 4L5 6.5L7.5 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+              </svg>
+            </button>
+            <div className={`nav-dropdown ${useCasesOpen ? "open" : ""}`}>
+              <Link href="/use-cases/coding-agents" className="nav-dropdown-item" onClick={() => setUseCasesOpen(false)}>
+                Coding Agents
+              </Link>
+              <Link href="/use-cases/enterprise-agents" className="nav-dropdown-item" onClick={() => setUseCasesOpen(false)}>
+                Enterprise Agents
+              </Link>
+              <Link href="/use-cases/safety-critical" className="nav-dropdown-item" onClick={() => setUseCasesOpen(false)}>
+                Safety-Critical
+              </Link>
+            </div>
+          </div>
+
+          <Link href="/pricing" className="nav-link">
+            Pricing
+          </Link>
+
+          <Link href="/about" className="nav-link">
+            About
+          </Link>
+
+          <a
+            href="https://docs.omegacode.ai"
+            className="nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Docs
+          </a>
+
+          <Link href="/#install" className="btn-chrome" style={{ padding: "8px 18px", fontSize: "13px" }}>
+            Get Started
+          </Link>
+        </div>
+
+        {/* Mobile toggle */}
+        <button
+          className="nav-mobile"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+          style={{
+            background: "none",
+            border: "none",
+            color: "var(--text-primary)",
+            cursor: "pointer",
+            padding: "var(--space-2)",
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            {mobileOpen ? (
+              <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            ) : (
+              <>
+                <path d="M3 6H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M3 10H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M3 14H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </>
+            )}
+          </svg>
+        </button>
+      </nav>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div
+          className="nav-mobile"
+          style={{
+            position: "absolute",
+            top: 56,
+            left: 0,
+            right: 0,
+            background: "var(--bg-base)",
+            borderBottom: "1px solid var(--border-subtle)",
+            padding: "var(--space-4) var(--space-5)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--space-3)",
+          }}
+        >
+          <Link href="/technology" className="nav-link" onClick={() => setMobileOpen(false)}>
+            Technology
+          </Link>
+
+          <div className="section-label" style={{ marginTop: "var(--space-2)" }}>Use Cases</div>
+          <Link href="/use-cases/coding-agents" className="nav-link" onClick={() => setMobileOpen(false)}>
+            Coding Agents
+          </Link>
+          <Link href="/use-cases/enterprise-agents" className="nav-link" onClick={() => setMobileOpen(false)}>
+            Enterprise Agents
+          </Link>
+          <Link href="/use-cases/safety-critical" className="nav-link" onClick={() => setMobileOpen(false)}>
+            Safety-Critical
+          </Link>
+
+          <div className="divider-subtle" style={{ margin: "var(--space-2) 0" }} />
+
+          <Link href="/pricing" className="nav-link" onClick={() => setMobileOpen(false)}>
+            Pricing
+          </Link>
+          <Link href="/about" className="nav-link" onClick={() => setMobileOpen(false)}>
+            About
+          </Link>
+          <a href="https://docs.omegacode.ai" className="nav-link" target="_blank" rel="noopener noreferrer">
+            Docs
+          </a>
+
+          <Link
+            href="/#install"
+            className="btn-chrome"
+            onClick={() => setMobileOpen(false)}
+            style={{ textAlign: "center", marginTop: "var(--space-2)" }}
+          >
+            Get Started
+          </Link>
+        </div>
+      )}
+    </header>
   );
 }

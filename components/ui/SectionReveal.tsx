@@ -1,28 +1,25 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { BRAND_EASING, SCROLL_REVEAL_DURATION, SCROLL_REVEAL_OFFSET } from "@/lib/constants";
+import { ReactNode } from "react";
 
 interface SectionRevealProps {
-  children: React.ReactNode;
+  children: ReactNode;
+  className?: string;
+  stagger?: boolean;
 }
 
-/** ScrollReveal: Framer Motion in-view opacity + translateY with brand easing. */
-export function SectionReveal({ children }: SectionRevealProps) {
+/**
+ * Wrapper that applies the .reveal class for scroll-triggered animation.
+ * The global RevealProvider handles the IntersectionObserver.
+ */
+export function SectionReveal({
+  children,
+  className = "",
+  stagger = false,
+}: SectionRevealProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: SCROLL_REVEAL_OFFSET }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: SCROLL_REVEAL_DURATION,
-        ease: BRAND_EASING as unknown as [number, number, number, number],
-      }}
-    >
+    <div className={`reveal ${stagger ? "stagger" : ""} ${className}`}>
       {children}
-    </motion.div>
+    </div>
   );
 }
-
-/** Alias for plan compatibility. */
-export const ScrollReveal = SectionReveal;
