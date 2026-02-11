@@ -1,20 +1,25 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { ReactNode } from "react";
 
 interface SectionRevealProps {
-  children: React.ReactNode;
+  children: ReactNode;
+  className?: string;
+  stagger?: boolean;
 }
 
-export function SectionReveal({ children }: SectionRevealProps) {
+/**
+ * Wrapper that applies the .reveal class for scroll-triggered animation.
+ * The global RevealProvider handles the IntersectionObserver.
+ */
+export function SectionReveal({
+  children,
+  className = "",
+  stagger = false,
+}: SectionRevealProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-    >
+    <div className={`reveal ${stagger ? "stagger" : ""} ${className}`}>
       {children}
-    </motion.div>
+    </div>
   );
 }

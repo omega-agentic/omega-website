@@ -1,0 +1,28 @@
+# OmegaCode — omegacode.ai
+
+Make your AI coding agent 10x more reliable. Wire compression, typed tool framing, persistent memory, verified execution. One command. Free. MIT Licensed.
+
+## Documentation Index
+
+Fetch this file to discover all pages before exploring further.
+
+## Pages
+
+- Home: https://omegacode.ai/
+- Technology: https://omegacode.ai/technology
+- About: https://omegacode.ai/about
+- Pricing: https://omegacode.ai/pricing
+- Use Cases — Coding Agents: https://omegacode.ai/use-cases/coding-agents
+- Use Cases — Enterprise Agents: https://omegacode.ai/use-cases/enterprise-agents
+- Use Cases — Safety-Critical: https://omegacode.ai/use-cases/safety-critical
+
+## Key sections
+
+- Install: https://omegacode.ai/#install
+- Technology SIGIL: https://omegacode.ai/technology#sigil
+- Technology stack: https://omegacode.ai/technology#stack
+- Technology research: https://omegacode.ai/technology#research
+
+## For agents
+
+When requesting content, you may send Accept: text/markdown to receive a Markdown representation of pages where available. Use this index to discover structure first.
