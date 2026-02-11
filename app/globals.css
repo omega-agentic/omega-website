@@ -106,18 +106,17 @@ html:not(.light) [data-terminal] {
   --terminal-content-pad: clamp(16px, 4vw, 48px);
   --terminal-chrome: linear-gradient(
     180deg,
-    #999 0%,
-    #fff 8%,
-    #bbb 16%,
-    #555 28%,
-    #c8c8c8 36%,
-    #eee 44%,
-    #666 56%,
-    #ccc 64%,
-    #fff 72%,
-    #888 84%,
-    #aaa 92%,
-    #666 100%
+    #aaa 0%,
+    #fff 10%,
+    #ccc 22%,
+    #888 34%,
+    #ddd 46%,
+    #fff 54%,
+    #999 66%,
+    #ddd 78%,
+    #fff 86%,
+    #bbb 94%,
+    #999 100%
   );
   --terminal-chrome-hover: linear-gradient(
     180deg,
@@ -262,6 +261,7 @@ html.light [data-terminal] {
   color: var(--terminal-fg);
   margin: 0;
   padding: 0;
+  text-wrap: balance;
 }
 .terminal-hero-sub {
   font-family: var(--font-mono);
@@ -272,6 +272,28 @@ html.light [data-terminal] {
   padding: 0;
   max-width: 600px;
 }
+/* Hero load-in animation — JS adds .hero-ready to <body> on mount */
+.hero-fade {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.hero-ready .hero-fade {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-fade-1 { transition-delay: 0.1s; }
+.hero-fade-2 { transition-delay: 0.3s; }
+.hero-fade-3 { transition-delay: 0.5s; }
+.hero-fade-4 { transition-delay: 0.7s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .terminal-hero-cta {
   margin-top: var(--space-6);
 }
@@ -288,6 +310,49 @@ html.light [data-terminal] {
 .hero-stat strong {
   color: var(--terminal-fg);
   font-weight: 600;
+}
+
+/* ── Compatibility ticker ── */
+.home-ticker-wrap {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-7) 0 var(--space-5);
+  max-width: var(--terminal-content-width);
+  margin: 0 auto;
+}
+.logo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 46px;
+  padding: 10px 18px;
+  background: var(--terminal-bg);
+  border: 1px solid var(--terminal-border);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.logo-pill-img {
+  max-width: 100%;
+  max-height: 20px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.logo-pill-fallback {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--terminal-fg);
+}
+.home-ticker-label {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terminal-muted);
+  margin-bottom: var(--space-4);
 }
 
 /* ── Centered terminal area ── */
@@ -582,6 +647,7 @@ html.light [data-terminal] {
 }
 @media (prefers-reduced-motion: reduce) {
   .terminal-cursor { animation: none; }
+  .terminal-install-box::before { animation: none; background: var(--terminal-accent); opacity: 0.5; }
 }
 
 /* ── Install command box (hero) ── */
@@ -590,16 +656,59 @@ html.light [data-terminal] {
   align-items: center;
   gap: var(--space-3);
   background: var(--terminal-bg);
-  border: 1px solid var(--terminal-border);
+  border: 1px solid transparent;
   border-radius: 8px;
   padding: var(--space-3) var(--space-4);
   cursor: pointer;
-  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
   user-select: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
 }
-.terminal-install-box:hover {
-  border-color: var(--terminal-accent);
-  box-shadow: 0 0 0 1px rgba(76, 204, 230, 0.15);
+
+/* Animated rotating conic-gradient border */
+.terminal-install-box::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -2;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 30%,
+    var(--terminal-accent) 50%,
+    transparent 70%
+  );
+  animation: border-spin 3s linear infinite;
+}
+
+/* Inner mask to reveal only the border line */
+.terminal-install-box::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: 7px;
+  background: var(--terminal-bg);
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes border-spin {
+  to { --border-angle: 360deg; }
+}
+
+.terminal-install-box:hover::before {
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 20%,
+    var(--terminal-accent-bright) 50%,
+    transparent 80%
+  );
 }
 .terminal-install-dollar {
   font-family: var(--font-mono);
@@ -664,6 +773,7 @@ html.light [data-terminal] {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.1));
+  text-wrap: balance;
 }
 
 /* Page subtitle */
@@ -702,7 +812,7 @@ html.light [data-terminal] {
 /* Page body text */
 .page-body {
   font-family: var(--font-mono);
-  font-size: clamp(13px, 1.4vw, 15px);
+  font-size: 13px;
   line-height: 1.7;
   color: var(--terminal-muted);
   margin: 0 0 var(--space-4) 0;
@@ -718,24 +828,30 @@ html.light [data-terminal] {
 
 /* Divider */
 .page-divider {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--terminal-border);
+  width: 100%;
+  height: 1px;
+  border: none;
+  margin: var(--space-8) 0;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--terminal-border) 30%,
+    var(--terminal-border) 70%,
+    transparent 100%
+  );
+  font-size: 0;
+  color: transparent;
   overflow: hidden;
-  white-space: nowrap;
-  user-select: none;
-  opacity: 0.5;
-  margin: var(--space-6) 0;
 }
 
 /* Code block (page context) */
 .page-code {
   background: var(--terminal-bg);
   border: 1px solid var(--terminal-border);
-  border-radius: 6px;
-  padding: var(--space-4);
+  border-radius: 8px;
+  padding: var(--space-5);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.6;
   color: var(--terminal-fg);
   overflow-x: auto;
@@ -753,10 +869,10 @@ html.light [data-terminal] {
 }
 .page-list li {
   font-family: var(--font-mono);
-  font-size: clamp(13px, 1.4vw, 15px);
+  font-size: 13px;
   line-height: 1.7;
   color: var(--terminal-fg);
-  padding: var(--space-2) 0;
+  padding: var(--space-3) 0;
   border-bottom: 1px solid var(--terminal-border);
 }
 .page-list li:last-child {
@@ -774,7 +890,7 @@ html.light [data-terminal] {
 .page-grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 @media (max-width: 640px) {
   .page-grid-2 {
@@ -784,20 +900,32 @@ html.light [data-terminal] {
 
 /* Page card — minimal bordered box */
 .page-card {
+  background: var(--terminal-bg);
   border: 1px solid var(--terminal-border);
-  border-radius: 6px;
-  padding: var(--space-5);
+  border-radius: 8px;
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+}
+.page-card .page-code {
+  flex: 1;
+}
+.page-code-red {
+  border-left: 2px solid #ff9592;
+}
+.page-code-green {
+  border-left: 2px solid var(--terminal-accent);
 }
 .page-card-label {
   font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--terminal-fg);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 .page-card-desc {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.6;
   color: var(--terminal-muted);
 }
@@ -825,9 +953,14 @@ html.light [data-terminal] {
 .home-section {
   max-width: var(--terminal-content-width);
   margin: 0 auto;
-  padding: 0 var(--terminal-content-pad);
+  padding: 0 var(--space-4);
   position: relative;
   z-index: 1;
+}
+@media (min-width: 968px) {
+  .home-section {
+    padding: 0;
+  }
 }
 .home-section-label {
   font-family: var(--font-mono);
@@ -848,57 +981,95 @@ html.light [data-terminal] {
     grid-template-columns: 1fr;
   }
 }
+.home-card-icon {
+  color: var(--terminal-muted);
+  margin-bottom: var(--space-3);
+  opacity: 0.7;
+}
 .home-stat-card {
   background: var(--terminal-bg);
   border: 1px solid var(--terminal-border);
-  border-radius: 6px;
-  padding: var(--space-5);
+  border-radius: 8px;
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
 }
 .home-stat-number {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  font-size: clamp(24px, 3vw, 32px);
+  font-size: clamp(32px, 4vw, 44px);
   font-weight: 700;
   color: var(--terminal-fg);
   line-height: 1;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.home-stat-label {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--terminal-fg);
+  margin-bottom: var(--space-3);
 }
 .home-stat-desc {
   font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.6;
   color: var(--terminal-muted);
 }
 .home-step {
   background: var(--terminal-bg);
   border: 1px solid var(--terminal-border);
-  border-radius: 6px;
-  padding: var(--space-5);
+  border-radius: 8px;
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
 }
 .home-step-number {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--terminal-muted);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-3);
 }
 .home-step-title {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--terminal-fg);
   margin-bottom: var(--space-3);
 }
 .home-step-desc {
   font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.6;
   color: var(--terminal-muted);
 }
 .home-step-code {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--terminal-accent-bright);
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
 }
+/* ── Proxy architecture diagram ── */
+.proxy-diagram-wrap {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  background: var(--terminal-bg);
+  border: 1px solid var(--terminal-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: var(--space-5);
+}
+.proxy-diagram-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 640px) {
+  .proxy-diagram-wrap {
+    height: 320px;
+  }
+}
+
 .home-under-hood {
   font-family: var(--font-mono);
   font-size: clamp(13px, 1.4vw, 15px);
@@ -913,27 +1084,64 @@ html.light [data-terminal] {
 .home-under-hood a:hover {
   color: var(--terminal-fg);
 }
+
+/* Before/After layout with arrow */
+.home-before-after {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-4);
+  align-items: stretch;
+}
+.home-before-after-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--terminal-border);
+  background: var(--terminal-bg);
+  color: var(--terminal-fg);
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .home-before-after {
+    grid-template-columns: 1fr;
+  }
+  .home-before-after-arrow {
+    margin: 0 auto;
+    transform: rotate(90deg);
+  }
+}
+
 .home-divider {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--terminal-border);
-  overflow: hidden;
-  white-space: nowrap;
-  user-select: none;
-  opacity: 0.5;
+  width: 100%;
   max-width: var(--terminal-content-width);
   margin: var(--space-8) auto;
-  padding: 0 var(--terminal-content-pad);
   position: relative;
   z-index: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--terminal-border) 30%,
+    var(--terminal-border) 70%,
+    transparent 100%
+  );
 }
 .home-cta {
   text-align: center;
   max-width: var(--terminal-content-width);
   margin: 0 auto;
-  padding: 0 var(--terminal-content-pad) var(--space-9);
+  padding: 0 var(--space-4) var(--space-9);
   position: relative;
   z-index: 1;
+}
+@media (min-width: 968px) {
+  .home-cta {
+    padding: 0 0 var(--space-9);
+  }
 }
 .home-cta-heading {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
@@ -972,12 +1180,21 @@ html.light [data-terminal] {
   .home-divider {
     margin: var(--space-7) auto;
   }
-  .home-stat-card,
+  .home-stat-card {
+    padding: var(--space-5) var(--space-4);
+  }
   .home-step {
-    padding: var(--space-4);
+    padding: var(--space-5) var(--space-4);
+  }
+  .page-card {
+    padding: var(--space-5) var(--space-4);
   }
   .home-stat-number {
-    font-size: 24px;
+    font-size: 32px;
+    margin-bottom: var(--space-3);
+  }
+  .home-stat-label {
+    font-size: 13px;
   }
   .home-stat-desc,
   .home-step-desc,
