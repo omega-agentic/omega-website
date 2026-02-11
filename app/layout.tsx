@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { inter, jetbrainsMono } from "@/lib/fonts";
+import { inter, jetbrainsMono, spaceGrotesk } from "@/lib/fonts";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { RevealProvider } from "@/components/ui/RevealProvider";
-import { NavHeader } from "@/components/layout/NavHeader";
-import { Footer } from "@/components/layout/Footer";
+import { LayoutChrome } from "@/components/layout/LayoutChrome";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -58,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}
       suppressHydrationWarning
     >
       <body>
@@ -84,11 +83,7 @@ export default function RootLayout({
         />
         <ThemeProvider>
           <RevealProvider />
-          <NavHeader />
-          <div id="main-content" tabIndex={-1}>
-            {children}
-          </div>
-          <Footer />
+          <LayoutChrome>{children}</LayoutChrome>
         </ThemeProvider>
       </body>
     </html>
