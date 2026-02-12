@@ -6,14 +6,25 @@ import { LayoutChrome } from "@/components/layout/LayoutChrome";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://omegacode.ai"),
   title: "OmegaCode — Make Your AI Coding Agent 10x More Reliable",
   description:
     "Drop-in upgrade for Cursor, Claude Code, OpenCode, Cline, and every AI coding tool. 433x wire compression. 0% tool call syntax errors. One command. Free. MIT Licensed.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "OmegaCode — Make Your AI Coding Agent 10x More Reliable",
     description:
       "Drop-in upgrade for Cursor, Claude Code, OpenCode, Cline, and every AI coding tool. 433x wire compression. 0% tool call syntax errors. One command. Free. MIT Licensed.",
     type: "website",
+    url: "https://omegacode.ai",
+  },
+  twitter: {
+    card: "summary",
+    title: "OmegaCode — Make Your AI Coding Agent 10x More Reliable",
+    description:
+      "Drop-in upgrade for Cursor, Claude Code, OpenCode, Cline, and every AI coding tool. One command. Free. MIT Licensed.",
   },
 };
 
@@ -25,7 +36,7 @@ const JSON_LD = {
       "@id": "https://omegacode.ai/#organization",
       name: "OmegaCode",
       url: "https://omegacode.ai",
-      logo: "https://omegacode.ai/logo.png",
+      logo: "https://omegacode.ai/icon.svg",
     },
     {
       "@type": "SoftwareApplication",
@@ -57,24 +68,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}
-      suppressHydrationWarning
+      className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}
     >
       <body>
-        <a
-          href="#main-content"
-          className="skip-link"
-          style={{
-            position: "absolute",
-            left: "-9999px",
-            zIndex: 999,
-            padding: "var(--space-2) var(--space-4)",
-            backgroundColor: "var(--text-primary)",
-            color: "var(--bg-base)",
-            fontFamily: "var(--font-body)",
-            fontSize: "14px",
-          }}
-        >
+        <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
         <script

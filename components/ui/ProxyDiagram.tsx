@@ -14,15 +14,15 @@ const RESPAWN_DELAY = 1000;
 
 /* Dark palette — terminal-page is always dark */
 const C = {
-  nodeFill: "#222221",
-  nodeStroke: "#494844",
-  line: "rgba(59, 58, 55, 0.5)",
+  nodeFill: "#2a2a2a",       /* gray-4 */
+  nodeStroke: "#484848",     /* gray-7 */
+  line: "rgba(58, 58, 58, 0.5)", /* gray-6 at 50% */
   accent: "#4ccce6",
   accentGlow: "rgba(76, 204, 230, 0.22)",
   accentSoft: "rgba(76, 204, 230, 0.06)",
-  labelDim: "#7c7b74",
-  labelBright: "#eeeeec",
-  headerDim: "#5c5b56",
+  labelDim: "#7b7b7b",      /* gray-10 */
+  labelBright: "#eeeeee",   /* gray-12 */
+  headerDim: "#606060",     /* gray-8 */
 };
 
 /* ─── Omega icon path (from omega-icon.svg, viewBox 0 0 153 119) ─── */
@@ -313,8 +313,12 @@ export function ProxyDiagram() {
   }, []);
 
   return (
-    <div className="proxy-diagram-wrap">
+    <div className="proxy-diagram-wrap" role="img" aria-label="Architecture diagram showing AI coding tools connecting through the OmegaCode proxy to LLM providers">
       <canvas ref={canvasRef} className="proxy-diagram-canvas" aria-hidden="true" />
+      <span className="sr-only">
+        Diagram: AI tools like Cursor, Claude Code, Copilot, Cline, and OpenHands
+        connect through OmegaCode to providers like Anthropic, OpenAI, Gemini, DeepSeek, and Groq.
+      </span>
     </div>
   );
 }
