@@ -104,7 +104,7 @@ export default function HomePage() {
       </div>
 
       {/* Terminal showcase */}
-      <Box className="terminal-page-center">
+      <Box className="terminal-page-center hero-fade hero-fade-terminal">
         <Terminal>
           <BootSequence />
         </Terminal>
@@ -115,7 +115,7 @@ export default function HomePage() {
 
       {/* ── What changes ── */}
       <ScrollReveal as="section" className="home-section">
-        <div className="home-section-label">What changes</div>
+        <h2 className="home-section-label">What changes</h2>
         <div className="home-grid-3">
           <ScrollReveal className="home-stat-card" delay={0}>
             <Zap size={20} className="home-card-icon" />
@@ -157,7 +157,7 @@ export default function HomePage() {
 
       {/* ── Before / After ── */}
       <ScrollReveal as="section" className="home-section">
-        <div className="home-section-label">Before → After</div>
+        <h2 className="home-section-label">Before → After</h2>
         <p className="page-body" style={{ marginBottom: "var(--space-5)" }}>
           Same tools. Same models. Better results.
         </p>
@@ -208,7 +208,7 @@ Nothing else.`}
 
       {/* ── How it works ── */}
       <ScrollReveal as="section" className="home-section">
-        <div className="home-section-label">How it works</div>
+        <h2 className="home-section-label">How it works</h2>
         <p className="page-body" style={{ marginBottom: "var(--space-5)" }}>
           30 seconds to better agents.
         </p>
@@ -250,7 +250,7 @@ Nothing else.`}
 
       {/* ── What you get ── */}
       <ScrollReveal as="section" className="home-section">
-        <div className="home-section-label">What you get</div>
+        <h2 className="home-section-label">What you get</h2>
         <p className="page-body" style={{ marginBottom: "var(--space-5)" }}>
           Everything your agent needs. Nothing it doesn&apos;t.
         </p>
@@ -276,7 +276,7 @@ Nothing else.`}
 
       {/* ── Under the hood ── */}
       <ScrollReveal as="section" className="home-section">
-        <div className="home-section-label">Under the hood</div>
+        <h2 className="home-section-label">Under the hood</h2>
         <p className="page-body" style={{ marginBottom: "var(--space-5)" }}>
           Built on infrastructure that&apos;s been missing from AI since day one.
         </p>
@@ -303,16 +303,13 @@ Nothing else.`}
             </div>
           </ScrollReveal>
         </div>
-        <p className="home-under-hood" style={{ marginTop: "var(--space-5)" }}>
-          <Link href="/technology">Read the full technical architecture →</Link>
-        </p>
       </ScrollReveal>
 
       <ScrollReveal className="home-divider" aria-hidden="true">{null}</ScrollReveal>
 
       {/* ── Final CTA ── */}
       <ScrollReveal className="home-cta">
-        <div className="home-cta-heading">Better agents start with better infrastructure</div>
+        <h2 className="home-cta-heading">Better agents start with better infrastructure</h2>
         <div className="home-cta-sub">Free. Open source. MIT Licensed.</div>
         <Flex justify="center">
           <TerminalPrompt />

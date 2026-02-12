@@ -163,7 +163,7 @@ export function AsciiBackground() {
       ctx.font = `${BASE_FONT_SIZE}px var(--font-jetbrains-mono), ui-monospace, monospace`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "#6f6d66"; // Radix sand-9
+      ctx.fillStyle = "#6e6e6e"; // Radix gray-9
 
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];

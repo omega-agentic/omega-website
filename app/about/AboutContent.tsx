@@ -62,17 +62,6 @@ export function AboutContent() {
 
       <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
 
-      {/* Team */}
-      <ScrollReveal as="section" className="page-section">
-        <div className="page-section-label">Team</div>
-        <ScrollReveal className="page-card" style={{ maxWidth: "320px" }}>
-          <div className="page-card-label">Harrison Hines</div>
-          <div className="page-card-desc">Founder</div>
-        </ScrollReveal>
-      </ScrollReveal>
-
-      <ScrollReveal className="page-divider" aria-hidden="true">{null}</ScrollReveal>
-
       {/* Company */}
       <ScrollReveal as="section" className="page-section">
         <div className="page-section-label">Company</div>
