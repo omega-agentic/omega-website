@@ -83,7 +83,7 @@ export default function HomePage() {
 
       {/* Hero section */}
       <Box className="terminal-hero" id="main-content" tabIndex={-1}>
-        <h1 className="terminal-hero-heading terminal-chrome-text hero-fade hero-fade-1">
+        <h1 className="terminal-hero-heading terminal-chrome-text hero-fade hero-fade-1" data-text="Better agent infra">
           Better agent infra
         </h1>
         <p className="terminal-hero-sub hero-fade hero-fade-2">
@@ -240,7 +240,7 @@ Nothing else.`}
         <ScrollReveal delay={300}>
           <ProxyDiagram />
         </ScrollReveal>
-        <p className="page-body" style={{ marginTop: "var(--space-5)", textAlign: "center" }}>
+        <p className="page-body" style={{ marginTop: "var(--space-5)" }}>
           No code changes. No config migration. No new workflows to learn.
           OmegaCode sits between your tools and your providers and makes everything work better.
         </p>
